@@ -71,7 +71,4 @@ func login(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	defer r.Body.Close()
-
-	
-
 }

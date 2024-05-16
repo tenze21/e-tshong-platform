@@ -4,9 +4,16 @@ const lastNameEl = document.querySelector("#last_name");
 const phoneNumberEl = document.querySelector("#contact_number");
 const passwordEl = document.querySelector("#password");
 const confirmPasswordEl = document.querySelector("#confirm_password");
-
+const emailEl = document.querySelector("#email");
+const genderEl = document.getElementsByName("gender");
+let selectedGender;
+genderEl.forEach((radio) => {
+  radio.addEventListener("click", () => {
+    selectedGender = radio.value;
+  });
+});
 let isFirstNameValid = false,
-  isLastNameValid= false,
+  isLastNameValid = false,
   isphoneNumberValid = false,
   isPasswordSecure = false,
   isConfirmPasswordValid = false;
@@ -20,7 +27,23 @@ form.addEventListener("submit", (e) => {
     isPasswordSecure &&
     isConfirmPasswordValid;
   if (isFormValid) {
-    location.reload();
+    let data = {
+      fname: firstNameEl.value,
+      lname: lastNameEl.value,
+      cnumber: phoneNumberEl.value,
+      email: emailEl.value,
+      gender: selectedGender,
+      password: passwordEl.value,
+    };
+    fetch("/register", {
+      method: "POST",
+      headers: {"Content-Type": "application/json; charset=UTF-8",},
+      body: JSON.stringify(data),
+    }).then(response =>{
+      if (response.status==201){
+        window.open("login.html","_self");
+      }
+    })
   }
 });
 
@@ -77,11 +100,11 @@ passwordEl.addEventListener("input", () => {
   }
 });
 
-confirmPasswordEl.addEventListener('input', ()=>{
-    if(!(confirmPasswordEl.value===passwordEl.value)){
-        showError(confirmPasswordEl, "Password doesn't match")
-    }else{
-        hideError(confirmPasswordEl)
-        isConfirmPasswordValid=true;
-    }
-})
+confirmPasswordEl.addEventListener("input", () => {
+  if (!(confirmPasswordEl.value === passwordEl.value)) {
+    showError(confirmPasswordEl, "Password doesn't match");
+  } else {
+    hideError(confirmPasswordEl);
+    isConfirmPasswordValid = true;
+  }
+});
