@@ -61,3 +61,17 @@ func AddProfile(w http.ResponseWriter, r *http.Request) {
 	}
 	httpresp.RespondWithJson(w, http.StatusCreated, map[string]string{"status": "Profile uploaded"})
 }
+
+func login(w http.ResponseWriter, r *http.Request){
+	var seller model.Seller
+
+	err:=json.NewDecoder(r.Body).Decode(&seller)
+	if err!=nil{
+		httpresp.RespondWithError(w, http.StatusBadRequest, "Invalid json body")
+		return
+	}
+	defer r.Body.Close()
+
+	
+
+}

@@ -1,0 +1,218 @@
+@layer reset {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  *::after,
+  *::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+  img,
+  picture,
+  svg,
+  canvas {
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+:root {
+  --grey-dark: #716e6e;
+  --grey-light: #aeaeae;
+  --yellow-dark: #e2cb01;
+  --yellow-light: #f9dc49;
+  --orange: #f3880a;
+  --blue-light: #09abdd;
+  --font-family: "Poppins", sans-serif;
+  --font-weight-thin: 100;
+  --font-weight-extra-light: 200;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 700;
+}
+body {
+  font-family: var(--font-family);
+}
+nav {
+  .topnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 3rem;
+    .logo {
+      img {
+        width: 9rem;
+        height: 7rem;
+      }
+    }
+    .search_bar {
+      position: relative;
+      .bx {
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+      }
+      input {
+        width: 500px;
+        height: 45px;
+        border-radius: 100px;
+        padding-left: 3rem;
+        border: 2px solid #000;
+        padding-right: 2rem;
+        transition: all 200ms ease-in-out;
+        &:focus,
+        &:focus-visible {
+          border: 1px solid var(--orange);
+          outline: 1px solid var(--orange);
+        }
+        &::placeholder {
+          font-size: 1.3rem;
+          font-weight: var(--font-weight-regular);
+        }
+      }
+    }
+    .register_btn {
+      text-decoration: none;
+      color: #fff;
+      background-color: var(--yellow-dark);
+      padding: 0.5em 1.5em;
+      border-radius: 10px;
+      font-size: 1.3rem;
+      &:hover,
+      &:focus-visible {
+        background-color: var(--yellow-light);
+      }
+    }
+  }
+  .categories {
+    background-color: var(--orange);
+    padding-left: 3.5rem;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    ul {
+      list-style: none;
+      display: flex;
+      gap: clamp(1rem, 7vw, 5rem);
+      li {
+        a {
+          text-decoration: none;
+          color: #fff;
+          font-size: 1.3rem;
+          &:hover,
+          &:focus-visible {
+            color: var(--yellow-light);
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  padding-inline: 3rem;
+  align-items: center;
+  .product_images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .grid_col_2 {
+    .product_details {
+      h1 {
+        font-size: 2rem;
+        font-weight: var(--font-weight-light);
+        margin-bottom: 2rem;
+        font-weight: var(--font-weight-medium);
+      }
+      .actual_price {
+        font-size: 1.5rem;
+        font-weight: var(--font-weight-medium);
+        text-decoration: line-through;
+      }
+      .new_price {
+        font-size: 1.5rem;
+        font-weight: var(--font-weight-semi-bold);
+        margin-bottom: 2rem;
+      }
+    }
+    .seller_details {
+      margin-bottom: 2rem;
+      p {
+        font-size: 1.5rem;
+        margin-bottom: 0.3em;
+        a{
+          text-decoration: none;
+          color: #000;
+          position: relative;
+          &::before{
+            content: "";
+            width: 0;
+            height: 2px;
+            background-color: #000;
+            position: absolute;
+            top: 2rem;
+            transition: width 300ms ease-in-out;
+          }
+          &:hover{
+            &::before{
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+    .product_description {
+      margin-top: 2rem;
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.3rem;
+      }
+      p {
+        font-size: 1.3rem;
+      }
+    }
+  }
+}
+
+footer {
+  background-color: var(--orange);
+  padding: 2rem 0;
+  p {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #fff;
+  }
+}
