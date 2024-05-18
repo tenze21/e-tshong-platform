@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Profile</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico.svg">
+    <link rel="stylesheet" href="assets/css/profile.css">
+</head>
+<body>
+    <nav>
+        <div class="topnav">
+            <div class="logo"><img src="assets/images/logo.svg" alt="logo"></div>
+            <div class="greeting_text">
+                <h1><span id="greeting"></span> <span id="user_name">Tenzin</span>!!!</h1>
+            </div>
+            <div class="search_bar">
+                <i class='bx bx-search'></i>
+                <input type="search" placeholder="Search products">
+            </div>
+        </div>
+        <div class="categories">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="#" aria-current="page">Profile</a></li>
+                <li><a href="#">Electronics</a></li>
+                <li><a href="#">Automobile</a></li>
+                <li><a href="#">Furniture</a></li>
+                <li><a href="#">Utensils</a></li>
+                <li><a href="#">Others</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="d_block">
+            <section class="profile_wrapper" aria-labelledby="user_profile">
+                <h1 id="user_profile" hidden>Profile</h1>
+                <div class="profile_img_wrapper">
+                    <img src="assets/images/default_profile.svg" alt="profile" class="profile_img">
+                    <button class="change_profile_btn"><label for="profile" class="add_profile">Update Profile</label></button>
+                    <input type="file" accept="image/jpeg, image/png, image/jpg" id="profile" class="profile">
+                </div>
+                <div class="user_details">
+                    <p>Name: <span id="name">Tenzin Choda</span></p>
+                    <p>Email: <span id="email_value">tenzin@example.com</span></p>
+                    <p>Contact Number: <span id="contact_number_value">17736762</span></p>
+                    <p>Gender: <span id="gender">male</span></p>
+                </div>
+                <button class="edit_btn"><i class='bx bx-edit-alt'></i></button>
+                <button class="logout">Logout</button>
+            </section>
+        </div>
+        <hr>
+        <section class="posts_wrapper" aria-labelledby="posts">
+            <div class="header">
+                <h1 id="posts">My Posts.</h1>
+                <a href="post_creation.html">Add items for sale</a>
+            </div>
+            <div class="d_grid">
+                <!-- <div class="no_post">
+                    <h2>No posts to show yet.</h2>
+                </div> -->
+
+                <div class="card_container">
+                    <div class="product_img">
+                        <img src="assets/images/product_img.png" alt="product image">
+                    </div>
+                    <div class="card_body">
+                        <h3 class="product_title">High grade wooden wardrobe</h3>
+                        <div class="price">
+                            <p class="actual_price">Nu. <span id="actual_price">50,000</span></p>   
+                            <p class="new_price">Nu. <span id="new_price">30,000</span></p>         
+                        </div>
+                        <p class="contact">Seller Contact: <span id="seller_contact">17736762</span></p>
+                        <div class="card_btns">
+                            <button class="view_more">View More</button>
+                            <button class="delete">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card_container">
+                    <div class="product_img">
+                        <img src="assets/images/product_img.png" alt="product image">
+                    </div>
+                    <div class="card_body">
+                        <h3 class="product_title">High grade wooden wardrobe</h3>
+                        <div class="price">
+                            <p class="actual_price">Nu. <span id="actual_price">50,000</span></p>   
+                            <p class="new_price">Nu. <span id="new_price">30,000</span></p>         
+                        </div>
+                        <p class="contact">Seller Contact: <span id="seller_contact">17736762</span></p>
+                        <div class="card_btns">
+                            <button class="view_more">View More</button>
+                            <button class="delete">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card_container">
+                    <div class="product_img">
+                        <img src="assets/images/product_img.png" alt="product image">
+                    </div>
+                    <div class="card_body">
+                        <h3 class="product_title">High grade wooden wardrobe</h3>
+                        <div class="price">
+                            <p class="actual_price">Nu. <span id="actual_price">50,000</span></p>   
+                            <p class="new_price">Nu. <span id="new_price">30,000</span></p>         
+                        </div>
+                        <p class="contact">Seller Contact: <span id="seller_contact">17736762</span></p>
+                        <div class="card_btns">
+                            <button class="view_more">View More</button>
+                            <button class="delete">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card_container">
+                    <div class="product_img">
+                        <img src="assets/images/product_img.png" alt="product image">
+                    </div>
+                    <div class="card_body">
+                        <h3 class="product_title">High grade wooden wardrobe</h3>
+                        <div class="price">
+                            <p class="actual_price">Nu. <span id="actual_price">50,000</span></p>   
+                            <p class="new_price">Nu. <span id="new_price">30,000</span></p>         
+                        </div>
+                        <p class="contact">Seller Contact: <span id="seller_contact">17736762</span></p>
+                        <div class="card_btns">
+                            <button class="view_more">View More</button>
+                            <button class="delete">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card_container">
+                    <div class="product_img">
+                        <img src="assets/images/product_img.png" alt="product image">
+                    </div>
+                    <div class="card_body">
+                        <h3 class="product_title">High grade wooden wardrobe</h3>
+                        <div class="price">
+                            <p class="actual_price">Nu. <span id="actual_price">50,000</span></p>   
+                            <p class="new_price">Nu. <span id="new_price">30,000</span></p>         
+                        </div>
+                        <p class="contact">Seller Contact: <span id="seller_contact">17736762</span></p>
+                        <div class="card_btns">
+                            <button class="view_more">View More</button>
+                            <button class="delete">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card_container">
+                    <div class="product_img">
+                        <img src="assets/images/product_img.png" alt="product image">
+                    </div>
+                    <div class="card_body">
+                        <h3 class="product_title">High grade wooden wardrobe</h3>
+                        <div class="price">
+                            <p class="actual_price">Nu. <span id="actual_price">50,000</span></p>   
+                            <p class="new_price">Nu. <span id="new_price">30,000</span></p>         
+                        </div>
+                        <p class="contact">Seller Contact: <span id="seller_contact">17736762</span></p>
+                        <div class="card_btns">
+                            <button class="view_more">View More</button>
+                            <button class="delete">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Copyright&copy; e-tshong 2024. All Rights Reserved.</p>
+    </footer>
+    <!-- edit profile -->
+    <dialog class="profile_edit_model">
+        <form action="#">
+            <button id="model_close"><i class='bx bx-x'></i></button> 
+            <div class="form_field">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="First Name" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="form_field">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="Last Name" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="form_field">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="Email" autocomplete="off">
+            </div>
+            <div class="form_field">
+                <label for="contact_number">Contact Number:</label>
+                <input type="tel" id="contact_number" name="Contact Number" minlength="8" maxlength="8">
+            </div>
+            <fieldset>
+                <legend>Gender:</legend>
+                <div class="radio_field">
+                    <input type="radio" name="gender" id="male" value="male">
+                    <label for="male">Male</label>
+                </div>
+                <div class="radio_field">
+                    <input type="radio" name="gender" id="female" value="female">
+                    <label for="female">Female</label>
+                </div>
+                <div class="radio_field">
+                    <input type="radio" name="gender" id="other" value="other">
+                    <label for="other">Other</label>
+                </div>
+            </fieldset>
+            <input type="submit" value="Update" id="update_btn">
+        </form>
+    </dialog>
+    <!-- edit profile -->
+
+    <!-- delete comfirmation -->
+    <dialog class="confirmation_modal">
+        <div>
+            <p>The Post will be permanently deleted.</p>
+            <div class="btns">
+                <button class="confirm">Confirm</button>
+                <button class="cancel">Cancel</button>
+            </div>
+        </div>
+    </dialog>
+    <!-- delete comfirmation -->
+</body>
+<script src="assets/js/general.js"></script>
+<script src="assets/js/profile.js"></script>
+</html>

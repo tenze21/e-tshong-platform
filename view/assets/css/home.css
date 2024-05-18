@@ -195,6 +195,8 @@ main{
     .product_img{
       img{
         border-radius: 10px;
+        width: 320px;
+        height: 220px;
       }
     }
     .card_body{

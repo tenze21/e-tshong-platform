@@ -14,8 +14,13 @@ func InitializeRoutes() {
 	router.HandleFunc("/register", controller.Register).Methods("POST")
 	router.HandleFunc("/login", controller.Login)
 	router.HandleFunc("/profile", controller.AddProfile).Methods("POST")
+	// router.HandleFunc("/seller/{phonenumber}", controller.GetSeller).Methods("GET")
 
-	fhandler:=http.FileServer(http.Dir("./view"))
+	// product routes
+	router.HandleFunc("/product", controller.AddProduct).Methods("POST")
+	router.HandleFunc("/products", controller.GetAllProducts)
+
+	fhandler := http.FileServer(http.Dir("./view"))
 	router.PathPrefix("/").Handler(fhandler)
 
 	log.Println("Application running on port", port)

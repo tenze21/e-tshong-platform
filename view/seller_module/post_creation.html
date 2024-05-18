@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Creation</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="assets/css/post_creation.css">
+</head>
+<body>
+    <nav>
+        <div class="topnav">
+            <div class="logo"><img src="assets/images/logo.svg" alt="logo"></div>
+            <div class="greeting_text">
+                <h1><span id="greeting"></span> <span id="user_name">Tenzin</span>!!!</h1>
+            </div>
+            <div class="search_bar">
+                <i class='bx bx-search'></i>
+                <input type="search" placeholder="Search products">
+            </div>
+        </div>
+        <div class="categories">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="#">Electronics</a></li>
+                <li><a href="#">Automobile</a></li>
+                <li><a href="#">Furniture</a></li>
+                <li><a href="#">Utensils</a></li>
+                <li><a href="#">Others</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <form action="#">
+            <div class="d-grid">
+                <div class="product_images_wrapper">
+                    <div class="product_image">
+                        <img src="assets/images/product_img.png" alt="product image" class="img1">
+                        <label for="img1"><i class='bx bx-plus'></i></label>
+                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img1" required>
+                    </div>
+                    <div class="product_image">
+                        <img src="assets/images/product_img.png" alt="product image" class="img2">
+                        <label for="img2"><i class='bx bx-plus'></i></label>
+                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img2" required>
+                    </div>
+                    <div class="product_image">
+                        <img src="assets/images/product_img.png" alt="product image" class="img3">
+                        <label for="img3"><i class='bx bx-plus'></i></label>
+                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img3" required>
+                    </div>
+                    <div class="product_image">
+                        <img src="assets/images/product_img.png" alt="product image" class="img4">
+                        <label for="img4"><i class='bx bx-plus'></i></label>
+                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img4" required>
+                    </div>
+                </div>
+                <div class="product_details">
+                    <div class="form_field">
+                        <label for="title">Product Title:</label>
+                        <input type="text" id="title" name="title" required>
+                    </div>
+                    <div class="form_field">
+                        <label for="actual_price">Actual Price:</label>
+                        <input type="number" id="actual_price" name="actual price">
+                    </div>
+                    <div class="form_field">
+                        <label for="selling_price">Selling Price:</label>
+                        <input type="number" id="selling_price" name="selling price">
+                    </div>
+                    <div class="form_field">
+                        <label for="category">Category:</label>
+                        <select name="category" id="category">
+                            <option value="">Select a product category</option>
+                            <option value="electronic">Electronics</option>
+                            <option value="automobile">Automobile</option>
+                            <option value="furniture">Furniture</option>
+                            <option value="utensils">Utensils</option>
+                            <option value="others">Others</option>
+                        </select>
+                        <i class='bx bxs-down-arrow'></i>
+                    </div>
+                    <div class="form_field">
+                        <label for="description">Product Description:</label>
+                        <textarea name="product description" id="description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Post Now" id="submit_btn">
+        </form>
+    </main>
+    <footer>
+        <p>Copyright&copy; e-tshong 2024. All Rights Reserved.</p>
+    </footer>
+    <script src="assets/js/general.js"></script>
+    <script src="assets/js/post_creation.js"></script>
+</body>
+</html>

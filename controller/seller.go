@@ -7,6 +7,8 @@ import (
 	httpresp "myapp/utils/httpResp"
 	"net/http"
 	"strconv"
+	"time"
+
 )
 
 func Register(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +28,6 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 	httpresp.RespondWithJson(w, http.StatusCreated, map[string]string{"status": "Seller registered"})
 }
-
 
 func AddProfile(w http.ResponseWriter, r *http.Request) {
 	var profile model.SellerProfile
@@ -64,20 +65,52 @@ func AddProfile(w http.ResponseWriter, r *http.Request) {
 	httpresp.RespondWithJson(w, http.StatusCreated, map[string]string{"status": "Profile uploaded"})
 }
 
-func Login(w http.ResponseWriter, r *http.Request){
+func Login(w http.ResponseWriter, r *http.Request) {
 	var seller model.Seller
 
-	err:=json.NewDecoder(r.Body).Decode(&seller)
-	if err!=nil{
+	err := json.NewDecoder(r.Body).Decode(&seller)
+	if err != nil {
 		httpresp.RespondWithError(w, http.StatusBadRequest, "invalid json body")
 		return
 	}
 	defer r.Body.Close()
 
-	getErr:=seller.Get()
-	if getErr!=nil{
+	getErr := seller.Get()
+	if getErr != nil {
 		httpresp.RespondWithError(w, http.StatusUnauthorized, getErr.Error())
 		return
 	}
-	httpresp.RespondWithJson(w, http.StatusOK, map[string]string{"message":"success"})
+	authCookie := http.Cookie{
+		Name:    "session-cookie",
+		Value:   "hello-world",
+		Expires: time.Now().Add(30 * time.Minute),
+		Secure:  true,
+	}
+	http.SetCookie(w, &authCookie)
+
+	contactNumber := http.Cookie{
+		Name:  "contactnumber",
+		Value: strconv.Itoa(seller.ContactNumber),
+	}
+	http.SetCookie(w, &contactNumber)
+
+	httpresp.RespondWithJson(w, http.StatusOK, map[string]string{"message": "success"})
 }
+
+// func GetSeller(w http.ResponseWriter, r *http.Request) {
+// 	pnumber:=mux.Vars(r)["phonenumber"]
+// 	phonenumber, numErr:=getPnumber(pnumber)
+// 	if numErr!=nil{
+// 		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+// 		return
+// 	}
+// 	p:=model.Seller{ContactNumber: phonenumber}
+// }
+
+// func getPnumber(pnumberParam string) (int, error){
+// 	phonenumber, err:=strconv.Atoi(pnumberParam)
+// 	if err != nil{
+// 		return 0, err
+// 	}
+// 	return phonenumber, nil
+// }

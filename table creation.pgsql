@@ -20,3 +20,18 @@ CREATE TABLE seller_profile(
     profile_picture BYTEA,
     CONSTRAINT user_fk FOREIGN KEY (user_id) REFERENCES seller(UserId) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE product(
+    product_id SERIAL PRIMARY KEY,
+    user_id int NOT NULL,
+    product_img1 BYTEA,
+    product_img2 BYTEA,
+    product_img3 BYTEA,
+    product_img4 BYTEA,
+    product_title varchar(300) NOT NULL,
+    actual_price int DEFAULT NULL,
+    selling_price int NOT NULL,
+    category varchar(45) NOT NULL,
+    product_description varchar(500) NOT NULL,
+    CONSTRAINT seller_fk FOREIGN KEY (user_id) REFERENCES seller(UserId) ON DELETE CASCADE ON UPDATE CASCADE 
+)
