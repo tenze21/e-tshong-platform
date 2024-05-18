@@ -31,3 +31,8 @@ func (profile *SellerProfile) Add() error {
 	err := row.Scan(&profile.ProfilePicture)
 	return err
 }
+
+const queryGetSeller="SELECT contactnumber, password FROM seller WHERE contactnumber=$1 and password=$2;"
+func (s *Seller) Get() error{
+	return postgres.Db.QueryRow(queryGetSeller, s.ContactNumber, s.Password).Scan(&s.ContactNumber, &s.Password)
+}

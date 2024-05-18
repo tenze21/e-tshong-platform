@@ -30,17 +30,19 @@ form.addEventListener("submit", (e) => {
     let data = {
       fname: firstNameEl.value,
       lname: lastNameEl.value,
-      cnumber: phoneNumberEl.value,
+      cnumber: parseInt(phoneNumberEl.value),
       email: emailEl.value,
       gender: selectedGender,
       password: passwordEl.value,
     };
+    console.log(JSON.stringify(data));
     fetch("/register", {
       method: "POST",
       headers: {"Content-Type": "application/json; charset=UTF-8",},
       body: JSON.stringify(data),
     }).then(response =>{
       if (response.status==201){
+        alert("Registration Successful. Welcome to e-tshong.")
         window.open("login.html","_self");
       }
     })

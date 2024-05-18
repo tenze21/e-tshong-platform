@@ -17,6 +17,8 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
+
+	// convert contact number to int from string
 	saveErr := seller.Create()
 	if saveErr != nil {
 		httpresp.RespondWithError(w, http.StatusBadRequest, saveErr.Error())
@@ -62,13 +64,20 @@ func AddProfile(w http.ResponseWriter, r *http.Request) {
 	httpresp.RespondWithJson(w, http.StatusCreated, map[string]string{"status": "Profile uploaded"})
 }
 
-func login(w http.ResponseWriter, r *http.Request){
+func Login(w http.ResponseWriter, r *http.Request){
 	var seller model.Seller
 
 	err:=json.NewDecoder(r.Body).Decode(&seller)
 	if err!=nil{
-		httpresp.RespondWithError(w, http.StatusBadRequest, "Invalid json body")
+		httpresp.RespondWithError(w, http.StatusBadRequest, "invalid json body")
 		return
 	}
 	defer r.Body.Close()
+
+	getErr:=seller.Get()
+	if getErr!=nil{
+		httpresp.RespondWithError(w, http.StatusUnauthorized, getErr.Error())
+		return
+	}
+	httpresp.RespondWithJson(w, http.StatusOK, map[string]string{"message":"success"})
 }

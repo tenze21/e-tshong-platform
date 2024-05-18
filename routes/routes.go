@@ -12,6 +12,7 @@ func InitializeRoutes() {
 	var port = 8080
 	router := mux.NewRouter()
 	router.HandleFunc("/register", controller.Register).Methods("POST")
+	router.HandleFunc("/login", controller.Login)
 	router.HandleFunc("/profile", controller.AddProfile).Methods("POST")
 
 	fhandler:=http.FileServer(http.Dir("./view"))
