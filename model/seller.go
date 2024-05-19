@@ -24,6 +24,16 @@ type SellerProfile struct {
 	ProfilePicture []byte `json:"profilepicture"`
 }
 
+type SellerWithProfile struct {
+	UserId         int    `json:"userid"`
+	ProfilePicture []byte `json:"profilepicture"`
+	FirstName      string `json:"fname"`
+	LastName       string `josn:"lname"`
+	ContactNumber  int    `json:"cnumber"`
+	Email          string `json:"email"`
+	Gender         string `json:"gender"`
+}
+
 const queryInsertSellerProfile = "INSERT INTO seller_profile(user_id, profile_picture) VALUES($1, $2) Returning profile_picture;"
 
 func (profile *SellerProfile) Add() error {
@@ -32,7 +42,14 @@ func (profile *SellerProfile) Add() error {
 	return err
 }
 
-const queryGetSeller="SELECT contactnumber, password FROM seller WHERE contactnumber=$1 and password=$2;"
-func (s *Seller) Get() error{
+const queryGetSeller = "SELECT contactnumber, password FROM seller WHERE contactnumber=$1 and password=$2;"
+
+func (s *Seller) Get() error {
 	return postgres.Db.QueryRow(queryGetSeller, s.ContactNumber, s.Password).Scan(&s.ContactNumber, &s.Password)
+}
+
+const queryGetSellerWithProfile = "SELECT s.userid, p.profile_picture, s.firstname, s.lastname, s.contactnumber, s.email, s.gender From seller s JOIN seller_profile p ON s.userid=p.user_id WHERE s.contactnumber=$1 "
+
+func (p *SellerWithProfile) Read() error {
+	return postgres.Db.QueryRow(queryGetSellerWithProfile, p.ContactNumber).Scan(&p.UserId, &p.ProfilePicture, &p.FirstName, &p.LastName, &p.ContactNumber, &p.Email, &p.Gender)
 }

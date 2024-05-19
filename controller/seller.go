@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"database/sql"
 	"encoding/json"
 	"io"
 	"myapp/model"
@@ -9,6 +10,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/gorilla/mux"
 )
 
 func Register(w http.ResponseWriter, r *http.Request) {
@@ -97,20 +99,31 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	httpresp.RespondWithJson(w, http.StatusOK, map[string]string{"message": "success"})
 }
 
-// func GetSeller(w http.ResponseWriter, r *http.Request) {
-// 	pnumber:=mux.Vars(r)["phonenumber"]
-// 	phonenumber, numErr:=getPnumber(pnumber)
-// 	if numErr!=nil{
-// 		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
-// 		return
-// 	}
-// 	p:=model.Seller{ContactNumber: phonenumber}
-// }
+func GetSeller(w http.ResponseWriter, r *http.Request) {
+	pnumber:=mux.Vars(r)["phonenumber"]
+	phonenumber, numErr:=getPnumber(pnumber)
+	if numErr!=nil{
+		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+		return
+	}
+	p:=model.SellerWithProfile{ContactNumber: phonenumber}
+	getErr:=p.Read()
+	if getErr!=nil{
+		switch getErr{
+		case sql.ErrNoRows:
+			httpresp.RespondWithError(w, http.StatusNotFound, "user not found")
+		default:
+			httpresp.RespondWithError(w, http.StatusInternalServerError, getErr.Error())
+		}
+		return
+	}
+	httpresp.RespondWithJson(w, http.StatusOK, p)
+}
 
-// func getPnumber(pnumberParam string) (int, error){
-// 	phonenumber, err:=strconv.Atoi(pnumberParam)
-// 	if err != nil{
-// 		return 0, err
-// 	}
-// 	return phonenumber, nil
-// }
+func getPnumber(pnumberParam string) (int, error){
+	phonenumber, err:=strconv.Atoi(pnumberParam)
+	if err != nil{
+		return 0, err
+	}
+	return phonenumber, nil
+}
