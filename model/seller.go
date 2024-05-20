@@ -20,12 +20,11 @@ func (s *Seller) Create() error {
 }
 
 type SellerProfile struct {
-	UserId         int    `json:"userid"`
+	ContactNumber         int    `json:"cnumber"`
 	ProfilePicture []byte `json:"profilepicture"`
 }
 
 type SellerWithProfile struct {
-	UserId         int    `json:"userid"`
 	ProfilePicture []byte `json:"profilepicture"`
 	FirstName      string `json:"fname"`
 	LastName       string `josn:"lname"`
@@ -34,10 +33,10 @@ type SellerWithProfile struct {
 	Gender         string `json:"gender"`
 }
 
-const queryInsertSellerProfile = "INSERT INTO seller_profile(user_id, profile_picture) VALUES($1, $2) Returning profile_picture;"
+const queryInsertSellerProfile = "INSERT INTO seller_profile(contact_number, profile_picture) VALUES($1, $2) Returning profile_picture;"
 
 func (profile *SellerProfile) Add() error {
-	row := postgres.Db.QueryRow(queryInsertSellerProfile, profile.UserId, profile.ProfilePicture)
+	row := postgres.Db.QueryRow(queryInsertSellerProfile, profile.ContactNumber, profile.ProfilePicture)
 	err := row.Scan(&profile.ProfilePicture)
 	return err
 }
@@ -48,13 +47,20 @@ func (s *Seller) Get() error {
 	return postgres.Db.QueryRow(queryGetSeller, s.ContactNumber, s.Password).Scan(&s.ContactNumber, &s.Password)
 }
 
-const queryGetSellerWithProfile = "SELECT s.userid, p.profile_picture, s.firstname, s.lastname, s.contactnumber, s.email, s.gender From seller s JOIN seller_profile p ON s.userid=p.user_id WHERE s.contactnumber=$1 "
+const queryGetSellerWithProfile = "SELECT p.profile_picture, s.firstname, s.lastname, s.contactnumber, s.email, s.gender From seller s JOIN seller_profile p ON s.contactnumber=p.contact_number WHERE s.contactnumber=$1 "
 
 func (p *SellerWithProfile) Read() error {
-	return postgres.Db.QueryRow(queryGetSellerWithProfile, p.ContactNumber).Scan(&p.UserId, &p.ProfilePicture, &p.FirstName, &p.LastName, &p.ContactNumber, &p.Email, &p.Gender)
+	return postgres.Db.QueryRow(queryGetSellerWithProfile, p.ContactNumber).Scan(&p.ProfilePicture, &p.FirstName, &p.LastName, &p.ContactNumber, &p.Email, &p.Gender)
 }
 
 const queryGetSellerDetails= "SELECT firstname, lastname, contactnumber, email, gender FROM seller WHERE contactnumber=$1;"
 func (s *Seller) GetDetails() error{
 	return postgres.Db.QueryRow(queryGetSellerDetails, s.ContactNumber).Scan(&s.FirstName, &s.LastName, &s.ContactNumber, &s.Email, &s.Gender)
+}
+
+const queryUpdateProfile = "UPDATE seller_profile SET profile_picture=$1 WHERE contact_number=$2"
+
+func (p *SellerProfile) UpdatePic() error {
+    _, err := postgres.Db.Exec(queryUpdateProfile, p.ProfilePicture, p.ContactNumber)
+    return err
 }

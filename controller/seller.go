@@ -2,6 +2,7 @@ package controller
 
 import (
 	"database/sql"
+	"encoding/base64"
 	"encoding/json"
 	"io"
 	"myapp/model"
@@ -53,10 +54,10 @@ func AddProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	uid := r.FormValue("userid")
-	uidInt, _ := strconv.Atoi(uid)
+	cnumber := r.FormValue("cnumber")
+	cnumberInt, _ := strconv.Atoi(cnumber)
 
-	profile.UserId = uidInt
+	profile.ContactNumber = cnumberInt
 	profile.ProfilePicture = profilePictureBytes
 
 	saveErr := profile.Add()
@@ -148,3 +149,50 @@ func GetSellerDetails(w http.ResponseWriter, r *http.Request){
 	}
 	httpresp.RespondWithJson(w, http.StatusOK, p)
 }
+
+func UpdateProfile(w http.ResponseWriter, r *http.Request) {
+    pnumber := mux.Vars(r)["phonenumber"]
+    phonenumber, numErr := getPnumber(pnumber)
+    if numErr != nil {
+        httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+        return
+    }
+
+    var profileData struct {
+        ProfilePicture string `json:"profilepicture"`
+    }
+
+	
+    decoder := json.NewDecoder(r.Body)
+    if err := decoder.Decode(&profileData); err != nil {
+        httpresp.RespondWithError(w, http.StatusBadRequest, "invalid json body")
+        return
+    }
+    defer r.Body.Close()
+
+    // Decode base64 image data
+    imageData, err := base64.StdEncoding.DecodeString(profileData.ProfilePicture[len("data:image/jpeg;base64,"):])
+    if err != nil {
+        httpresp.RespondWithError(w, http.StatusBadRequest, "invalid base64 data")
+        return
+    }
+
+    sellerProfile := &model.SellerProfile{
+        ContactNumber:  phonenumber,
+        ProfilePicture: imageData,
+    }
+
+    updateErr := sellerProfile.UpdatePic()
+    if updateErr != nil {
+        switch updateErr {
+        case sql.ErrNoRows:
+            httpresp.RespondWithError(w, http.StatusNotFound, "user not found")
+            return
+        default:
+            httpresp.RespondWithError(w, http.StatusInternalServerError, updateErr.Error())
+        }
+    } else {
+        httpresp.RespondWithJson(w, http.StatusOK, sellerProfile)
+    }
+}
+

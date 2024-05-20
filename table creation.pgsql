@@ -15,10 +15,12 @@ DROP TABLE seller;
 
 -- Table for User profile picture.
 CREATE TABLE seller_profile(
+    CREATE TABLE seller_profile(
     picture_id SERIAL PRIMARY KEY,
-    user_id int NOT NULL,
+    contact_number int NOT NULL,
     profile_picture BYTEA,
-    CONSTRAINT user_fk FOREIGN KEY (user_id) REFERENCES seller(UserId) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT cnumber_fk FOREIGN KEY (contact_number) REFERENCES seller(contactnumber) ON DELETE CASCADE ON UPDATE CASCADE
+)
 );
 
 CREATE TABLE product(

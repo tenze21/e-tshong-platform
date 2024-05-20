@@ -48,7 +48,8 @@ form.addEventListener("submit", (e) => {
       .then(response => {
           if (response.status === 201) {
               alert("Registration Successful. Welcome to e-tshong.");
-              // window.open("login.html", "_self");
+              window.open("login.html", "_self");
+              
               fetch("/sellerdetail/" + data.cnumber)
               .then(response => response.text())
               .then(data => {
@@ -68,7 +69,7 @@ function addDefaultProfile(seller){
   .then(response=>response.blob())
   .then(blob=>{
     const formData=new FormData();
-    formData.append('userid', data.userid)
+    formData.append('cnumber', data.cnumber)
     formData.append('profile_picture', blob, 'default_profile.jpg');
 
     fetch("/profile", {
