@@ -75,7 +75,6 @@ function getCookie(name) {
 
 // Use the function to get the contactnumber cookie
 let contactNumber = getCookie('contactnumber');
-console.log(contactNumber);
 
 fetch("/seller/" + contactNumber)
 .then((response)=>response.text())
@@ -86,4 +85,24 @@ const sellerName= document.getElementById("user_name");
 function greet(seller){
     const data= JSON.parse(seller)
     sellerName.textContent=data.fname
+}
+
+// Seller profile
+fetch("/seller/" + contactNumber)
+.then((response)=>response.text())
+.then((seller)=>showSeller(seller))
+.catch((error) => console.error('Error fetching seller data:', error));
+
+
+const sName=document.getElementById("name");
+const email=document.getElementById("email_value");
+const contactNum= document.getElementById("contact_number_value");
+const gender= document.getElementById("gender");
+function showSeller(seller){
+    const data= JSON.parse(seller);
+    console.log(data);
+    sName.textContent=`${data.fname} ${data.LastName}`;
+    email.textContent=data.email;
+    contactNum.textContent=data.cnumber;
+    gender.textContent=data.gender;
 }

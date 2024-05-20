@@ -127,3 +127,24 @@ func getPnumber(pnumberParam string) (int, error){
 	}
 	return phonenumber, nil
 }
+
+func GetSellerDetails(w http.ResponseWriter, r *http.Request){
+	pnumber:=mux.Vars(r)["phonenumber"]
+	phonenumber, numErr:=getPnumber(pnumber)
+	if numErr!=nil{
+		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+		return
+	}
+	p:=model.Seller{ContactNumber: phonenumber}
+	getErr:=p.GetDetails()
+	if getErr!=nil{
+		switch getErr{
+		case sql.ErrNoRows:
+			httpresp.RespondWithError(w, http.StatusNotFound, "user not found")
+		default:
+			httpresp.RespondWithError(w, http.StatusInternalServerError, getErr.Error())
+		}
+		return
+	}
+	httpresp.RespondWithJson(w, http.StatusOK, p)
+}

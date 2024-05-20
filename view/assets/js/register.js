@@ -26,28 +26,67 @@ form.addEventListener("submit", (e) => {
     isphoneNumberValid &&
     isPasswordSecure &&
     isConfirmPasswordValid;
-  if (isFormValid) {
-    let data = {
-      fname: firstNameEl.value,
-      lname: lastNameEl.value,
-      cnumber: parseInt(phoneNumberEl.value),
-      email: emailEl.value,
-      gender: selectedGender,
-      password: passwordEl.value,
-    };
-    console.log(JSON.stringify(data));
-    fetch("/register", {
-      method: "POST",
-      headers: {"Content-Type": "application/json; charset=UTF-8",},
-      body: JSON.stringify(data),
-    }).then(response =>{
-      if (response.status==201){
-        alert("Registration Successful. Welcome to e-tshong.")
-        window.open("login.html","_self");
-      }
-    })
+    if (isFormValid) {
+      let data = {
+          fname: firstNameEl.value,
+          lname: lastNameEl.value,
+          cnumber: parseInt(phoneNumberEl.value),
+          email: emailEl.value,
+          gender: selectedGender,
+          password: passwordEl.value,
+      };
+      console.log(JSON.stringify(data));
+
+      // Register the user first
+      fetch("/register", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json; charset=UTF-8",
+          },
+          body: JSON.stringify(data),
+      })
+      .then(response => {
+          if (response.status === 201) {
+              alert("Registration Successful. Welcome to e-tshong.");
+              // window.open("login.html", "_self");
+              fetch("/sellerdetail/" + data.cnumber)
+              .then(response => response.text())
+              .then(data => {
+                  addDefaultProfile(data);
+              })
+              .catch(error => {
+                  console.error("Error:", error);
+              });
+          } 
+      })
   }
 });
+
+function addDefaultProfile(seller){
+  const data=JSON.parse(seller);
+  fetch('/assets/images/default_profile.jpg')
+  .then(response=>response.blob())
+  .then(blob=>{
+    const formData=new FormData();
+    formData.append('userid', data.userid)
+    formData.append('profile_picture', blob, 'default_profile.jpg');
+
+    fetch("/profile", {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response=>{
+      if(response.status==201){
+        console.log("default profile set successfully.");
+      }else{
+        console.error("failed to set default profile.")
+      }
+    })
+    .catch(error=>{
+      console.error('error:', error)
+    })
+  })
+}
 
 function showError(input, message) {
   const formField = input.parentElement;

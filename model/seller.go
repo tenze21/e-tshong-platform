@@ -53,3 +53,8 @@ const queryGetSellerWithProfile = "SELECT s.userid, p.profile_picture, s.firstna
 func (p *SellerWithProfile) Read() error {
 	return postgres.Db.QueryRow(queryGetSellerWithProfile, p.ContactNumber).Scan(&p.UserId, &p.ProfilePicture, &p.FirstName, &p.LastName, &p.ContactNumber, &p.Email, &p.Gender)
 }
+
+const queryGetSellerDetails= "SELECT firstname, lastname, contactnumber, email, gender FROM seller WHERE contactnumber=$1;"
+func (s *Seller) GetDetails() error{
+	return postgres.Db.QueryRow(queryGetSellerDetails, s.ContactNumber).Scan(&s.FirstName, &s.LastName, &s.ContactNumber, &s.Email, &s.Gender)
+}
