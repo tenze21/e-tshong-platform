@@ -257,6 +257,9 @@ main {
       label {
         font-size: 1.3rem;
       }
+      small{
+        color: red;
+      }
     }
     fieldset {
       border: none;

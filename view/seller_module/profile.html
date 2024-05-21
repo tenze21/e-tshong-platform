@@ -173,15 +173,17 @@
     </footer>
     <!-- edit profile -->
     <dialog class="profile_edit_model">
-        <form action="#">
-            <button id="model_close"><i class='bx bx-x'></i></button> 
+        <form action="#" id="profile_editing_form">
+            <a href="#" id="model_close"><i class='bx bx-x'></i></a> 
             <div class="form_field">
                 <label for="first_name">First Name:</label>
-                <input type="text" id="first_name" name="First Name" autocomplete="off" spellcheck="false">
+                <input type="text" id="first_name" name="First Name" autocomplete="off" spellcheck="false" required>
+                <small></small>
             </div>
             <div class="form_field">
                 <label for="last_name">Last Name:</label>
                 <input type="text" id="last_name" name="Last Name" autocomplete="off" spellcheck="false">
+                <small></small>
             </div>
             <div class="form_field">
                 <label for="email">Email:</label>
@@ -189,20 +191,21 @@
             </div>
             <div class="form_field">
                 <label for="contact_number">Contact Number:</label>
-                <input type="tel" id="contact_number" name="Contact Number" minlength="8" maxlength="8">
+                <input type="tel" id="contact_number" name="Contact Number" minlength="8" maxlength="8" required>
+                <small></small>
             </div>
             <fieldset>
                 <legend>Gender:</legend>
                 <div class="radio_field">
-                    <input type="radio" name="gender" id="male" value="male">
+                    <input type="radio" name="gender" id="male" value="Male" required>
                     <label for="male">Male</label>
                 </div>
                 <div class="radio_field">
-                    <input type="radio" name="gender" id="female" value="female">
+                    <input type="radio" name="gender" id="female" value="Female">
                     <label for="female">Female</label>
                 </div>
                 <div class="radio_field">
-                    <input type="radio" name="gender" id="other" value="other">
+                    <input type="radio" name="gender" id="other" value="Other">
                     <label for="other">Other</label>
                 </div>
             </fieldset>

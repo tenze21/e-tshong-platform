@@ -17,6 +17,7 @@ func InitializeRoutes() {
 	router.HandleFunc("/seller/{phonenumber}", controller.GetSeller).Methods("GET")
 	router.HandleFunc("/sellerdetail/{phonenumber}", controller.GetSellerDetails).Methods("GET")
 	router.HandleFunc("/profile/{phonenumber}", controller.UpdateProfile).Methods("PUT")
+	router.HandleFunc("/seller/{phonenumber}", controller.UpdateSellerDetails).Methods("PUT")
 
 
 	// product routes

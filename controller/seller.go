@@ -162,7 +162,7 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
         ProfilePicture string `json:"profilepicture"`
     }
 
-	
+
     decoder := json.NewDecoder(r.Body)
     if err := decoder.Decode(&profileData); err != nil {
         httpresp.RespondWithError(w, http.StatusBadRequest, "invalid json body")
@@ -196,3 +196,29 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+func UpdateSellerDetails(w http.ResponseWriter, r *http.Request){
+	pnumber:=mux.Vars(r)["phonenumber"]
+    oldpnumber, numErr := getPnumber(pnumber)
+	if numErr != nil {
+        httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+        return
+    }
+	var seller model.Seller
+	decoder:=json.NewDecoder(r.Body)
+	if err:=decoder.Decode(&seller); err != nil{
+		httpresp.RespondWithError(w, http.StatusBadRequest, "invalid json body")
+		return
+	}
+	defer r.Body.Close()
+	updateErr:=seller.UpdateDetails(oldpnumber)
+	if updateErr!=nil{
+		switch updateErr{
+		case sql.ErrNoRows:
+			httpresp.RespondWithError(w, http.StatusNotFound, "user not found")
+		default:
+			httpresp.RespondWithError(w, http.StatusInternalServerError, updateErr.Error())
+		}
+	}else{
+		httpresp.RespondWithJson(w, http.StatusOK, seller)
+	}
+}

@@ -59,8 +59,14 @@ func (s *Seller) GetDetails() error{
 }
 
 const queryUpdateProfile = "UPDATE seller_profile SET profile_picture=$1 WHERE contact_number=$2"
-
 func (p *SellerProfile) UpdatePic() error {
     _, err := postgres.Db.Exec(queryUpdateProfile, p.ProfilePicture, p.ContactNumber)
+    return err
+}
+
+
+const queryUpdateDetails= "UPDATE seller SET firstname=$1, lastname=$2, contactnumber=$3, email=$4, gender=$5 WHERE contactnumber=$6;"
+func (s *Seller) UpdateDetails(oldpnumber int) error{
+	_,err:= postgres.Db.Exec(queryUpdateDetails, s.FirstName, s.LastName, s.ContactNumber, s.Email, s.Gender, oldpnumber)
     return err
 }
