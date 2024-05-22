@@ -103,7 +103,6 @@ nav{
             color: #fff;
             background-color: var(--yellow-dark);
             padding: 0.5em 1.5em;
-            border-radius: 10px;
             font-size: 1.3rem;
             &:hover, &:focus-visible{
               background-color: var(--yellow-light);
@@ -127,6 +126,9 @@ nav{
             &:hover, &:focus-visible{
               color: var(--yellow-light);
               outline: none;
+            }
+            &[aria-current="page"]{
+              color: var(--yellow-light);
             }
           }
         }

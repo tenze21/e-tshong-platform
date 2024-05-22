@@ -49,3 +49,28 @@ function greet(seller){
     const data= JSON.parse(seller)
     sellerName.textContent=data.fname
 }
+
+
+document.getElementById('submit_btn').addEventListener('click', function (e) {
+    e.preventDefault(); // Prevent the default form submission
+  
+    const form = document.querySelector('form');
+    const formData = new FormData(form);
+  
+    fetch('/product/' + contactNumber, {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('Product uploaded successfully.');
+        location.reload();
+      } else {
+        alert('Failed to upload product.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  });
+  

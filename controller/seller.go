@@ -7,6 +7,7 @@ import (
 	"io"
 	"myapp/model"
 	httpresp "myapp/utils/httpResp"
+	pnumberint "myapp/utils/pnumberInt"
 	"net/http"
 	"strconv"
 	"time"
@@ -102,7 +103,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 func GetSeller(w http.ResponseWriter, r *http.Request) {
 	pnumber:=mux.Vars(r)["phonenumber"]
-	phonenumber, numErr:=getPnumber(pnumber)
+	phonenumber, numErr:=pnumberint.GetPnumber(pnumber)
 	if numErr!=nil{
 		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
 		return
@@ -121,17 +122,9 @@ func GetSeller(w http.ResponseWriter, r *http.Request) {
 	httpresp.RespondWithJson(w, http.StatusOK, p)
 }
 
-func getPnumber(pnumberParam string) (int, error){
-	phonenumber, err:=strconv.Atoi(pnumberParam)
-	if err != nil{
-		return 0, err
-	}
-	return phonenumber, nil
-}
-
 func GetSellerDetails(w http.ResponseWriter, r *http.Request){
 	pnumber:=mux.Vars(r)["phonenumber"]
-	phonenumber, numErr:=getPnumber(pnumber)
+	phonenumber, numErr:=pnumberint.GetPnumber(pnumber)
 	if numErr!=nil{
 		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
 		return
@@ -152,7 +145,7 @@ func GetSellerDetails(w http.ResponseWriter, r *http.Request){
 
 func UpdateProfile(w http.ResponseWriter, r *http.Request) {
     pnumber := mux.Vars(r)["phonenumber"]
-    phonenumber, numErr := getPnumber(pnumber)
+    phonenumber, numErr := pnumberint.GetPnumber(pnumber)
     if numErr != nil {
         httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
         return
@@ -198,7 +191,7 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 
 func UpdateSellerDetails(w http.ResponseWriter, r *http.Request){
 	pnumber:=mux.Vars(r)["phonenumber"]
-    oldpnumber, numErr := getPnumber(pnumber)
+    oldpnumber, numErr := pnumberint.GetPnumber(pnumber)
 	if numErr != nil {
         httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
         return

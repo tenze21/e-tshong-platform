@@ -40,40 +40,40 @@
                     <div class="product_image">
                         <img src="assets/images/product_img.png" alt="product image" class="img1">
                         <label for="img1"><i class='bx bx-plus'></i></label>
-                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img1" required>
+                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img1" name="productimg1" required>
                     </div>
                     <div class="product_image">
                         <img src="assets/images/product_img.png" alt="product image" class="img2">
                         <label for="img2"><i class='bx bx-plus'></i></label>
-                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img2" required>
+                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img2" name="productimg2" required>
                     </div>
                     <div class="product_image">
                         <img src="assets/images/product_img.png" alt="product image" class="img3">
                         <label for="img3"><i class='bx bx-plus'></i></label>
-                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img3" required>
+                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img3" name="productimg3" required>
                     </div>
                     <div class="product_image">
                         <img src="assets/images/product_img.png" alt="product image" class="img4">
                         <label for="img4"><i class='bx bx-plus'></i></label>
-                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img4" required>
+                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="img4" name="productimg4" required>
                     </div>
                 </div>
                 <div class="product_details">
                     <div class="form_field">
                         <label for="title">Product Title:</label>
-                        <input type="text" id="title" name="title" required>
+                        <input type="text" id="title" name="ptitle" required>
                     </div>
                     <div class="form_field">
-                        <label for="actual_price">Actual Price:</label>
-                        <input type="number" id="actual_price" name="actual price">
+                        <label for="actual_price">Actual Price(Optional):</label>
+                        <input type="number" id="actual_price" name="aprice">
                     </div>
                     <div class="form_field">
                         <label for="selling_price">Selling Price:</label>
-                        <input type="number" id="selling_price" name="selling price">
+                        <input type="number" id="selling_price" name="sprice" required>
                     </div>
                     <div class="form_field">
                         <label for="category">Category:</label>
-                        <select name="category" id="category">
+                        <select name="category" id="category" required>
                             <option value="">Select a product category</option>
                             <option value="electronic">Electronics</option>
                             <option value="automobile">Automobile</option>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="form_field">
                         <label for="description">Product Description:</label>
-                        <textarea name="product description" id="description"></textarea>
+                        <textarea name="pdescription" id="description" required></textarea>
                     </div>
                 </div>
             </div>

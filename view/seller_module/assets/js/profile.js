@@ -1,7 +1,91 @@
-
-window.onload= function(){
+window.onload = function () {
   greetSeller();
+  fetch("/products/" + contactNumber)
+    .then((res) => res.text())
+    .then((data) => {
+      if (data) {
+        showProducts(data);
+      }
+    })
+    .catch((error) => console.error("Error fetching products:", error));
+};
+
+function showProducts(data) {
+  const noProducts = document.querySelector(".no_post");
+  noProducts.style.display = "none";
+  const products = JSON.parse(data);
+  products.forEach((product) => newProduct(product));
 }
+
+function newProduct(product) {
+    const productsWrapper = document.querySelector(".d_grid");
+    // Create card container
+    const container = document.createElement("div");
+    container.classList.add("card_container");
+    productsWrapper.appendChild(container);
+
+    // Create product image container
+    const productImage = document.createElement("div");
+    productImage.classList.add("product_img");
+    container.appendChild(productImage);
+
+    // Create and append product image
+    const img = document.createElement("img");
+    img.src = `data:image/jpeg;base64,${product.productimg1}`;
+    img.alt = "product image";
+    productImage.appendChild(img);
+
+    // Create card body
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card_body");
+    container.appendChild(cardBody);
+
+    // Create and append product title
+    const productTitle = document.createElement("h3");
+    productTitle.classList.add("product_title");
+    productTitle.textContent = product.ptitle;
+    cardBody.appendChild(productTitle);
+
+    // Create price container
+    const price = document.createElement("div");
+    price.classList.add("price");
+    cardBody.appendChild(price);
+
+    // Create and append actual price
+    const actualPrice = document.createElement("p");
+    actualPrice.classList.add("actual_price");
+    actualPrice.innerHTML = `Nu. <span id="actual_price">${product.aprice}</span>`;
+    if(product.aprice<=0){
+      actualPrice.style.display="none";
+    }
+    price.appendChild(actualPrice);
+
+    // Create and append new price
+    const newPrice = document.createElement("p");
+    newPrice.classList.add("new_price");
+    newPrice.innerHTML = `Nu. <span id="new_price">${product.sprice}</span>`;
+    price.appendChild(newPrice);
+
+    // Create and append seller contact
+    const contact = document.createElement("p");
+    contact.classList.add("contact");
+    contact.innerHTML = `Seller Contact: <span id="seller_contact">${product.contact_number}</span>`;
+    cardBody.appendChild(contact);
+
+    // Create and append card buttons
+    const buttonContainer= document.createElement("div");
+    buttonContainer.classList.add("card_btns");
+    cardBody.appendChild(buttonContainer);
+    const viewMoreButton = document.createElement("button");
+    viewMoreButton.classList.add("view_more");
+    viewMoreButton.textContent = "View More";
+    buttonContainer.appendChild(viewMoreButton)
+    const deleteButton= document.createElement("button");
+    deleteButton.classList.add("delete");
+    deleteButton.textContent="Delete";
+    buttonContainer.appendChild(deleteButton);
+}
+
 const editProfile = document.querySelector(".edit_btn");
 const closeEditModel = document.querySelector("#model_close");
 const editModel = document.querySelector(".profile_edit_model");
@@ -75,7 +159,6 @@ form.addEventListener("submit", (e) => {
   let isFormValid = isFirstNameValid && isLastNameValid && isphoneNumberValid;
   if (isFormValid) {
     let newSellerDetail = getFormData();
-    console.log(newSellerDetail);
     fetch("/seller/" + contactNumber, {
       method: "PUT",
       body: JSON.stringify(newSellerDetail),
@@ -89,7 +172,7 @@ form.addEventListener("submit", (e) => {
         alert("server: update request error.");
       }
     });
-  }else{
+  } else {
     alert("invalid form");
   }
 });
@@ -111,7 +194,7 @@ firstNameEl.addEventListener("input", () => {
   const re = /^[a-zA-Z\s]+(?:\s+[a-zA-Z\s]+)?$/;
   if (!re.test(firstNameEl.value)) {
     showError(firstNameEl, "Name Cannot have numbers and special characters.");
-    isFirstNameValid=false;
+    isFirstNameValid = false;
   } else {
     hideError(firstNameEl);
     isFirstNameValid = true;
@@ -122,7 +205,7 @@ lastNameEl.addEventListener("input", () => {
   const re = /^[a-zA-Z\s]+(?:\s+[a-zA-Z\s]+)?$/;
   if (!re.test(lastNameEl.value)) {
     showError(lastNameEl, "Name Cannot have numbers and special characters.");
-    isLastNameValid=false;
+    isLastNameValid = false;
   } else {
     hideError(lastNameEl);
     isLastNameValid = true;
@@ -133,7 +216,7 @@ contactNumberEl.addEventListener("input", () => {
   const re = /^(17|77)\d{6}$/;
   if (!re.test(contactNumberEl.value)) {
     showError(contactNumberEl, "Invalid phone number.");
-    isphoneNumberValid=false;
+    isphoneNumberValid = false;
   } else {
     hideError(contactNumberEl);
     isphoneNumberValid = true;
@@ -169,7 +252,7 @@ function getCookie(name) {
 
 // Use the function to get the contactnumber cookie
 let contactNumber = getCookie("contactnumber");
-function greetSeller(){
+function greetSeller() {
   fetch("/seller/" + contactNumber)
     .then((response) => response.text())
     .then((seller) => greet(seller))
@@ -200,8 +283,8 @@ function showSeller(seller) {
   contactNum.textContent = data.cnumber;
   gender.textContent = data.gender;
 }
-function showNewSellerData(seller){
-  sName.textContent=`${seller.fname} ${seller.lname}`;
+function showNewSellerData(seller) {
+  sName.textContent = `${seller.fname} ${seller.lname}`;
   email.textContent = seller.email;
   contactNum.textContent = seller.cnumber;
   gender.textContent = seller.gender;

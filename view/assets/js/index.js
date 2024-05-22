@@ -50,6 +50,9 @@ function newProduct(product) {
     const actualPrice = document.createElement("p");
     actualPrice.classList.add("actual_price");
     actualPrice.innerHTML = `Nu. <span id="actual_price">${product.aprice}</span>`;
+    if(product.aprice<=0){
+        actualPrice.style.display="none";
+    }
     price.appendChild(actualPrice);
 
     // Create and append new price

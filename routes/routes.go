@@ -19,10 +19,10 @@ func InitializeRoutes() {
 	router.HandleFunc("/profile/{phonenumber}", controller.UpdateProfile).Methods("PUT")
 	router.HandleFunc("/seller/{phonenumber}", controller.UpdateSellerDetails).Methods("PUT")
 
-
 	// product routes
-	router.HandleFunc("/product", controller.AddProduct).Methods("POST")
+	router.HandleFunc("/product/{phonenumber}", controller.AddProduct).Methods("POST")
 	router.HandleFunc("/products", controller.GetAllProducts)
+	router.HandleFunc("/products/{phonenumber}", controller.GetProducts).Methods("GET")
 
 	fhandler := http.FileServer(http.Dir("./view"))
 	router.PathPrefix("/").Handler(fhandler)

@@ -4,11 +4,20 @@ import (
 	"io"
 	"myapp/model"
 	httpresp "myapp/utils/httpResp"
+	pnumberint "myapp/utils/pnumberInt"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 func AddProduct(w http.ResponseWriter, r *http.Request) {
+	pnumber:=mux.Vars(r)["phonenumber"]
+	phonenumber, numErr:=pnumberint.GetPnumber(pnumber);
+	if numErr!=nil{
+		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+		return
+	}
 	var product model.Product
 	err := r.ParseMultipartForm(10 << 20)
 	if err != nil {
@@ -16,7 +25,7 @@ func AddProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	product.UserId, _ = strconv.Atoi(r.FormValue("userid"))
+	product.ContactNumber = phonenumber
 	product.ProductTitle = r.FormValue("ptitle")
 	product.ActualPrice, _ = strconv.Atoi(r.FormValue("aprice"))
 	product.SellingPrice, _ = strconv.Atoi(r.FormValue("sprice"))
@@ -61,6 +70,20 @@ func GetAllProducts(w http.ResponseWriter, r *http.Request) {
 	if geterr != nil {
 		httpresp.RespondWithError(w, http.StatusBadRequest, geterr.Error())
 		return
+	}
+	httpresp.RespondWithJson(w, http.StatusOK, products)
+}
+
+func GetProducts(w http.ResponseWriter, r *http.Request) {
+	pnumber := mux.Vars(r)["phonenumber"]
+    phonenumber, numErr:=pnumberint.GetPnumber(pnumber)
+	if numErr!=nil{
+		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+	}
+	p:=model.SellerProduct{ContactNumber: phonenumber}
+	products, getErr:=p.GetSellerProducts()
+	if getErr!=nil{
+		httpresp.RespondWithError(w, http.StatusBadRequest, getErr.Error())
 	}
 	httpresp.RespondWithJson(w, http.StatusOK, products)
 }
