@@ -75,11 +75,16 @@ func (s *SellerProduct) GetSellerProducts() ([]SellerProduct, error) {
 
 	for rows.Next() {
 		var sp SellerProduct
-		err := rows.Scan(&sp.ProductId, &sp.ContactNumber, &sp.Productimg1, &sp.Productimg2, &sp.Productimg3, &sp.Productimg4, &sp.ProductTitle, &sp.ActualPrice, &sp.SellingPrice, &sp.Category, &sp.ProductDescription, &sp.ContactNumber, &sp.FirstName, &sp.LastName,  &sp.Email)
+		err := rows.Scan(&sp.ProductId, &sp.ContactNumber, &sp.Productimg1, &sp.Productimg2, &sp.Productimg3, &sp.Productimg4, &sp.ProductTitle, &sp.ActualPrice, &sp.SellingPrice, &sp.Category, &sp.ProductDescription, &sp.ContactNumber, &sp.FirstName, &sp.LastName, &sp.Email)
 		if err != nil {
 			return nil, err
 		}
 		products = append(products, sp)
 	}
 	return products, nil
+}
+
+const queryGetProduct = "SELECT p.product_id, p.contact_number, p.product_img1, p.product_img2, p.product_img3, p.product_img4, p.product_title, p.actual_price, p.selling_price, p.category, p.product_description, s.contactnumber, s.firstname, s.lastname, s.email FROM  product p JOIN seller s ON p.contact_number=s.contactnumber WHERE p.product_id=$1"
+func (p *SellerProduct) GetProduct() error {
+	return postgres.Db.QueryRow(queryGetProduct, p.ProductId).Scan(&p.ProductId, &p.ContactNumber, &p.Productimg1, &p.Productimg2, &p.Productimg3, &p.Productimg4, &p.ProductTitle, &p.ActualPrice, &p.SellingPrice, &p.Category, &p.ProductDescription, &p.ContactNumber, &p.FirstName, &p.LastName, &p.Email)
 }

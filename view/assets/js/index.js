@@ -7,7 +7,6 @@ window.onload = function() {
 
 function showProducts(data){
     const products=JSON.parse(data);
-    console.log(products);
     products.forEach(product=>newProduct(product))
 }
 
@@ -70,5 +69,12 @@ function newProduct(product) {
     // Create and append view more button
     const button = document.createElement("button");
     button.textContent = "View More";
+    button.onclick = () => showProductDetail(product.productid);
     cardBody.appendChild(button);
+}
+
+function showProductDetail(pid){
+    // Add the product id to the URL parameter
+    const url = `product.html?pid=${pid}`;
+    window.open(url, "_self");
 }

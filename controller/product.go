@@ -1,12 +1,14 @@
 package controller
 
 import (
+	"database/sql"
 	"io"
 	"myapp/model"
 	httpresp "myapp/utils/httpResp"
 	pnumberint "myapp/utils/pnumberInt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -79,6 +81,7 @@ func GetProducts(w http.ResponseWriter, r *http.Request) {
     phonenumber, numErr:=pnumberint.GetPnumber(pnumber)
 	if numErr!=nil{
 		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+		return
 	}
 	p:=model.SellerProduct{ContactNumber: phonenumber}
 	products, getErr:=p.GetSellerProducts()
@@ -86,4 +89,32 @@ func GetProducts(w http.ResponseWriter, r *http.Request) {
 		httpresp.RespondWithError(w, http.StatusBadRequest, getErr.Error())
 	}
 	httpresp.RespondWithJson(w, http.StatusOK, products)
+}
+
+func GetProduct(w http.ResponseWriter, r *http.Request){
+	pid:=mux.Vars(r)["pid"]
+	productid, numErr:=pnumberint.GetPnumber(pid)
+	if numErr!=nil{
+		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+		return
+	}
+	p:=model.SellerProduct{ProductId: productid}
+	getErr:=p.GetProduct()
+	if getErr!=nil{
+		switch getErr{
+		case sql.ErrNoRows:
+			httpresp.RespondWithError(w, http.StatusNotFound, "product not found")
+		default:
+			httpresp.RespondWithError(w, http.StatusInternalServerError, getErr.Error())
+		}
+		return
+	}
+	// Set Product id cookie
+	productId:=http.Cookie{
+		Name: "product_id",
+		Value: strconv.Itoa(p.ProductId),
+		Expires: time.Now().Add(10 * time.Minute),
+	}
+	http.SetCookie(w, &productId)
+	httpresp.RespondWithJson(w, http.StatusOK, p)
 }

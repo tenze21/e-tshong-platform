@@ -76,14 +76,23 @@ function newProduct(product) {
     const buttonContainer= document.createElement("div");
     buttonContainer.classList.add("card_btns");
     cardBody.appendChild(buttonContainer);
+
     const viewMoreButton = document.createElement("button");
     viewMoreButton.classList.add("view_more");
     viewMoreButton.textContent = "View More";
+    viewMoreButton.onclick = () => showProductDetail(product.productid);
     buttonContainer.appendChild(viewMoreButton)
+
     const deleteButton= document.createElement("button");
     deleteButton.classList.add("delete");
     deleteButton.textContent="Delete";
     buttonContainer.appendChild(deleteButton);
+}
+
+function showProductDetail(pid){
+  // Add the product id to the URL parameter
+  const url = `product.html?pid=${pid}`;
+  window.open(url, "_self");
 }
 
 const editProfile = document.querySelector(".edit_btn");
