@@ -17,7 +17,14 @@ let contactNumber = getCookie('contactnumber');
 fetch("/seller/" + contactNumber)
 .then((response)=>response.text())
 .then((seller)=>greet(seller))
-.catch((error) => console.error('Error fetching seller data:', error));
+.catch((e) => {
+    if(e.message==303){
+        alert("Cookie expired or Could not find cookie. Please login again to renew your session.")
+        window.open("index.html", "_self")
+    }else if(error.message==500){
+        alert("Server error!")
+    }
+});
 
 const sellerName= document.getElementById("user_name");
 function greet(seller){

@@ -34,7 +34,6 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 	seller.Password = hashedPassword
 
-
 	// convert contact number to int from string
 	saveErr := seller.Create()
 	if saveErr != nil {
@@ -126,6 +125,9 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetSeller(w http.ResponseWriter, r *http.Request) {
+	if !VerifyCookie(w, r) {
+		return
+	}
 	pnumber := mux.Vars(r)["phonenumber"]
 	phonenumber, numErr := pnumberint.GetPnumber(pnumber)
 	if numErr != nil {
@@ -168,6 +170,9 @@ func GetSellerDetails(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateProfile(w http.ResponseWriter, r *http.Request) {
+	if !VerifyCookie(w, r) {
+		return
+	}
 	pnumber := mux.Vars(r)["phonenumber"]
 	phonenumber, numErr := pnumberint.GetPnumber(pnumber)
 	if numErr != nil {
@@ -213,6 +218,9 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateSellerDetails(w http.ResponseWriter, r *http.Request) {
+	if !VerifyCookie(w, r) {
+		return
+	}
 	pnumber := mux.Vars(r)["phonenumber"]
 	oldpnumber, numErr := pnumberint.GetPnumber(pnumber)
 	if numErr != nil {
@@ -237,4 +245,37 @@ func UpdateSellerDetails(w http.ResponseWriter, r *http.Request) {
 	} else {
 		httpresp.RespondWithJson(w, http.StatusOK, seller)
 	}
+}
+
+func Logout(w http.ResponseWriter, r *http.Request) {
+	// removing the authorization cookie on logout 
+	http.SetCookie(w, &http.Cookie{
+		Name:    "session-cookie",
+		Expires: time.Now(),
+	})
+
+	// removing the contactnumber cookie
+	http.SetCookie(w, &http.Cookie{
+		Name: "contactnumber",
+		Expires: time.Now(),
+	})
+	httpresp.RespondWithJson(w, http.StatusOK, map[string]string{"message": "cookie deleted"})
+}
+
+func VerifyCookie(w http.ResponseWriter, r *http.Request) bool {
+	cookie, err := r.Cookie("session-cookie")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			httpresp.RespondWithError(w, http.StatusSeeOther, "cookie not found")
+			return false
+		}
+		httpresp.RespondWithError(w, http.StatusInternalServerError, "internal server error")
+		return false
+	}
+
+	if cookie.Value != "hello-world" {
+		httpresp.RespondWithError(w, http.StatusSeeOther, "cookie does not match")
+		return false
+	}
+	return true
 }

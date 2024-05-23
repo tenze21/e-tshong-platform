@@ -278,7 +278,14 @@ function greetSeller() {
   fetch("/seller/" + contactNumber)
     .then((response) => response.text())
     .then((seller) => greet(seller))
-    .catch((error) => console.error("Error fetching seller data:", error));
+    .catch((e) => {
+      if(e.message==303){
+          alert("Cookie expired or Could not find cookie. Please login again to renew your session.")
+          window.open("index.html", "_self")
+      }else if(error.message==500){
+          alert("Server error!")
+      }
+  });
 }
 const sellerName = document.getElementById("user_name");
 function greet(seller) {
@@ -290,7 +297,14 @@ function greet(seller) {
 fetch("/seller/" + contactNumber)
   .then((response) => response.text())
   .then((seller) => showSeller(seller))
-  .catch((error) => console.error("Error fetching seller data:", error));
+  .catch((e) => {
+    if(e.message==303){
+        alert("Cookie expired or Could not find cookie. Please login again to renew your session.")
+        window.open("index.html", "_self")
+    }else if(error.message==500){
+        alert("Server error!")
+    }
+});
 
 const sName = document.getElementById("name");
 const email = document.getElementById("email_value");
@@ -317,7 +331,14 @@ const profile = document.querySelector(".profile_img");
 fetch("/seller/" + contactNumber)
   .then((response) => response.text())
   .then((seller) => showSellerProfile(seller))
-  .catch((error) => console.error("Error fetching seller data:", error));
+  .catch((error) => {
+    if(error.message==303){
+        alert("Cookie expired or Could not find cookie. Please login again to renew your session.")
+        window.open("index.html", "_self")
+    }else if(error.message==500){
+        alert("Server error!")
+    }
+});
 
 function showSellerProfile(seller) {
   const data = JSON.parse(seller);
@@ -354,8 +375,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           })
           .catch((error) => {
-            console.error("Error:", error);
-          });
+            if(error.message==303){
+                alert("Cookie expired or Could not find cookie. Please login again to renew your session.")
+                window.open("index.html", "_self")
+            }else if(error.message==500){
+                alert("Server error!")
+            }
+        });
       };
       reader.readAsDataURL(file);
     }

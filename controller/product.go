@@ -14,6 +14,9 @@ import (
 )
 
 func AddProduct(w http.ResponseWriter, r *http.Request) {
+	if !VerifyCookie(w, r) {
+		return
+	}
 	pnumber := mux.Vars(r)["phonenumber"]
 	phonenumber, numErr := pnumberint.GetPnumber(pnumber)
 	if numErr != nil {
@@ -77,6 +80,9 @@ func GetAllProducts(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetProducts(w http.ResponseWriter, r *http.Request) {
+	if !VerifyCookie(w, r) {
+		return
+	}
 	pnumber := mux.Vars(r)["phonenumber"]
 	phonenumber, numErr := pnumberint.GetPnumber(pnumber)
 	if numErr != nil {
@@ -120,6 +126,9 @@ func GetProduct(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteProduct(w http.ResponseWriter, r *http.Request) {
+	if !VerifyCookie(w, r) {
+		return
+	}
 	pid := mux.Vars(r)["pid"]
 	productid, numErr := pnumberint.GetPnumber(pid)
 	if numErr != nil {
