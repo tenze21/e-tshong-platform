@@ -86,13 +86,40 @@ function newProduct(product) {
     const deleteButton= document.createElement("button");
     deleteButton.classList.add("delete");
     deleteButton.textContent="Delete";
+    deleteButton.onclick=()=>deleteProduct(product.productid)
     buttonContainer.appendChild(deleteButton);
 }
 
+// Add the product ID to the URL parameter and redirect the user to the product detals page
 function showProductDetail(pid){
   // Add the product id to the URL parameter
   const url = `product.html?pid=${pid}`;
   window.open(url, "_self");
+}
+
+// Delete product functionality
+const confirmationModal = document.querySelector(".confirmation_modal");
+const cancelDelete = document.querySelector(".cancel");
+const confirmDelete=document.querySelector(".confirm");
+
+function deleteProduct(pid){
+  confirmationModal.showModal();
+  cancelDelete.addEventListener("click", () => {
+    confirmationModal.close();
+  });
+  confirmDelete.addEventListener("click", ()=>{
+    fetch('/product/' + pid, {
+      method: "DELETE",
+      headers: {"Content-Type": "application/json; charset=UTF-8"},
+    })
+    .then(res=>{
+      if(res.ok){
+        alert("Product Deleted Successfully!!!");
+        confirmationModal.close();
+        location.reload();
+      }
+    })
+  })
 }
 
 const editProfile = document.querySelector(".edit_btn");
@@ -230,20 +257,6 @@ contactNumberEl.addEventListener("input", () => {
     hideError(contactNumberEl);
     isphoneNumberValid = true;
   }
-});
-
-//  post delete confirmation model
-const deleteBtn = document.querySelectorAll(".delete");
-const cancelDelete = document.querySelector(".cancel");
-const confirmationModal = document.querySelector(".confirmation_modal");
-
-deleteBtn.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    confirmationModal.showModal();
-  });
-});
-cancelDelete.addEventListener("click", () => {
-  confirmationModal.close();
 });
 
 // Greeting Seller

@@ -119,3 +119,17 @@ func GetProduct(w http.ResponseWriter, r *http.Request) {
 	httpresp.RespondWithJson(w, http.StatusOK, p)
 }
 
+func DeleteProduct(w http.ResponseWriter, r *http.Request) {
+	pid := mux.Vars(r)["pid"]
+	productid, numErr := pnumberint.GetPnumber(pid)
+	if numErr != nil {
+		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+		return
+	}
+	p := model.ProductWithId{ProductId: productid}
+	if err := p.Delete(); err != nil {
+		httpresp.RespondWithError(w, http.StatusBadRequest, err.Error())
+        return
+	}
+	httpresp.RespondWithJson(w, http.StatusOK, map[string]string{"status":"deleted"})
+}

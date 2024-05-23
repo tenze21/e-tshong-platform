@@ -24,6 +24,7 @@ func InitializeRoutes() {
 	router.HandleFunc("/products", controller.GetAllProducts)
 	router.HandleFunc("/products/{phonenumber}", controller.GetProducts).Methods("GET")
 	router.HandleFunc("/product/{pid}", controller.GetProduct).Methods("GET")
+	router.HandleFunc("/product/{pid}", controller.DeleteProduct).Methods("DELETE")
 
 	fhandler := http.FileServer(http.Dir("./view"))
 	router.PathPrefix("/").Handler(fhandler)
