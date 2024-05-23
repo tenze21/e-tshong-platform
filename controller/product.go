@@ -14,9 +14,9 @@ import (
 )
 
 func AddProduct(w http.ResponseWriter, r *http.Request) {
-	pnumber:=mux.Vars(r)["phonenumber"]
-	phonenumber, numErr:=pnumberint.GetPnumber(pnumber);
-	if numErr!=nil{
+	pnumber := mux.Vars(r)["phonenumber"]
+	phonenumber, numErr := pnumberint.GetPnumber(pnumber)
+	if numErr != nil {
 		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
 		return
 	}
@@ -78,30 +78,30 @@ func GetAllProducts(w http.ResponseWriter, r *http.Request) {
 
 func GetProducts(w http.ResponseWriter, r *http.Request) {
 	pnumber := mux.Vars(r)["phonenumber"]
-    phonenumber, numErr:=pnumberint.GetPnumber(pnumber)
-	if numErr!=nil{
+	phonenumber, numErr := pnumberint.GetPnumber(pnumber)
+	if numErr != nil {
 		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
 		return
 	}
-	p:=model.SellerProduct{ContactNumber: phonenumber}
-	products, getErr:=p.GetSellerProducts()
-	if getErr!=nil{
+	p := model.SellerProduct{ContactNumber: phonenumber}
+	products, getErr := p.GetSellerProducts()
+	if getErr != nil {
 		httpresp.RespondWithError(w, http.StatusBadRequest, getErr.Error())
 	}
 	httpresp.RespondWithJson(w, http.StatusOK, products)
 }
 
-func GetProduct(w http.ResponseWriter, r *http.Request){
-	pid:=mux.Vars(r)["pid"]
-	productid, numErr:=pnumberint.GetPnumber(pid)
-	if numErr!=nil{
+func GetProduct(w http.ResponseWriter, r *http.Request) {
+	pid := mux.Vars(r)["pid"]
+	productid, numErr := pnumberint.GetPnumber(pid)
+	if numErr != nil {
 		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
 		return
 	}
-	p:=model.SellerProduct{ProductId: productid}
-	getErr:=p.GetProduct()
-	if getErr!=nil{
-		switch getErr{
+	p := model.SellerProduct{ProductId: productid}
+	getErr := p.GetProduct()
+	if getErr != nil {
+		switch getErr {
 		case sql.ErrNoRows:
 			httpresp.RespondWithError(w, http.StatusNotFound, "product not found")
 		default:
@@ -110,11 +110,12 @@ func GetProduct(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	// Set Product id cookie
-	productId:=http.Cookie{
-		Name: "product_id",
-		Value: strconv.Itoa(p.ProductId),
+	productId := http.Cookie{
+		Name:    "product_id",
+		Value:   strconv.Itoa(p.ProductId),
 		Expires: time.Now().Add(10 * time.Minute),
 	}
 	http.SetCookie(w, &productId)
 	httpresp.RespondWithJson(w, http.StatusOK, p)
 }
+

@@ -37,3 +37,6 @@ CREATE TABLE product(
     product_description varchar(500) NOT NULL,
     CONSTRAINT seller_fk FOREIGN KEY (contact_number) REFERENCES seller(contactnumber) ON DELETE CASCADE ON UPDATE CASCADE 
 )
+
+ALTER TABLE seller
+ALTER COLUMN Password TYPE varchar(255);

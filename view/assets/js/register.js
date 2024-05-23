@@ -48,7 +48,6 @@ form.addEventListener("submit", (e) => {
       .then(response => {
           if (response.status === 201) {
               alert("Registration Successful. Welcome to e-tshong.");
-              window.open("login.html", "_self");
               
               fetch("/sellerdetail/" + data.cnumber)
               .then(response => response.text())
@@ -79,6 +78,7 @@ function addDefaultProfile(seller){
     .then(response=>{
       if(response.status==201){
         console.log("default profile set successfully.");
+        window.open("login.html", "_self");
       }else{
         console.error("failed to set default profile.")
       }

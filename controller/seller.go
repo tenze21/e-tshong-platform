@@ -13,9 +13,11 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Register(w http.ResponseWriter, r *http.Request) {
+
 	var seller model.Seller
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&seller); err != nil {
@@ -23,6 +25,15 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
+
+	hashedPassword, err := httpresp.HashPassword(seller.Password)
+	if err != nil {
+		http.Error(w, "Failed to hash password", http.StatusInternalServerError)
+		return
+	}
+
+	seller.Password = hashedPassword
+
 
 	// convert contact number to int from string
 	saveErr := seller.Create()
@@ -79,11 +90,24 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	getErr := seller.Get()
-	if getErr != nil {
-		httpresp.RespondWithError(w, http.StatusUnauthorized, getErr.Error())
+	storedHashedPassword, pass_err := model.GetUserHashedPassword(seller.ContactNumber)
+
+	if pass_err != nil {
+		if pass_err == sql.ErrNoRows {
+			httpresp.RespondWithError(w, http.StatusUnauthorized, "Invalid email or password")
+		} else {
+			httpresp.RespondWithError(w, http.StatusInternalServerError, "Internal server error")
+		}
 		return
 	}
+
+	by_err := bcrypt.CompareHashAndPassword([]byte(storedHashedPassword), []byte(seller.Password))
+
+	if by_err != nil {
+		http.Error(w, "Invalid email or password", http.StatusUnauthorized)
+		return
+	}
+
 	authCookie := http.Cookie{
 		Name:    "session-cookie",
 		Value:   "hello-world",
@@ -102,16 +126,16 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetSeller(w http.ResponseWriter, r *http.Request) {
-	pnumber:=mux.Vars(r)["phonenumber"]
-	phonenumber, numErr:=pnumberint.GetPnumber(pnumber)
-	if numErr!=nil{
+	pnumber := mux.Vars(r)["phonenumber"]
+	phonenumber, numErr := pnumberint.GetPnumber(pnumber)
+	if numErr != nil {
 		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
 		return
 	}
-	p:=model.SellerWithProfile{ContactNumber: phonenumber}
-	getErr:=p.Read()
-	if getErr!=nil{
-		switch getErr{
+	p := model.SellerWithProfile{ContactNumber: phonenumber}
+	getErr := p.Read()
+	if getErr != nil {
+		switch getErr {
 		case sql.ErrNoRows:
 			httpresp.RespondWithError(w, http.StatusNotFound, "user not found")
 		default:
@@ -122,17 +146,17 @@ func GetSeller(w http.ResponseWriter, r *http.Request) {
 	httpresp.RespondWithJson(w, http.StatusOK, p)
 }
 
-func GetSellerDetails(w http.ResponseWriter, r *http.Request){
-	pnumber:=mux.Vars(r)["phonenumber"]
-	phonenumber, numErr:=pnumberint.GetPnumber(pnumber)
-	if numErr!=nil{
+func GetSellerDetails(w http.ResponseWriter, r *http.Request) {
+	pnumber := mux.Vars(r)["phonenumber"]
+	phonenumber, numErr := pnumberint.GetPnumber(pnumber)
+	if numErr != nil {
 		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
 		return
 	}
-	p:=model.Seller{ContactNumber: phonenumber}
-	getErr:=p.GetDetails()
-	if getErr!=nil{
-		switch getErr{
+	p := model.Seller{ContactNumber: phonenumber}
+	getErr := p.GetDetails()
+	if getErr != nil {
+		switch getErr {
 		case sql.ErrNoRows:
 			httpresp.RespondWithError(w, http.StatusNotFound, "user not found")
 		default:
@@ -144,74 +168,73 @@ func GetSellerDetails(w http.ResponseWriter, r *http.Request){
 }
 
 func UpdateProfile(w http.ResponseWriter, r *http.Request) {
-    pnumber := mux.Vars(r)["phonenumber"]
-    phonenumber, numErr := pnumberint.GetPnumber(pnumber)
-    if numErr != nil {
-        httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
-        return
-    }
-
-    var profileData struct {
-        ProfilePicture string `json:"profilepicture"`
-    }
-
-
-    decoder := json.NewDecoder(r.Body)
-    if err := decoder.Decode(&profileData); err != nil {
-        httpresp.RespondWithError(w, http.StatusBadRequest, "invalid json body")
-        return
-    }
-    defer r.Body.Close()
-
-    // Decode base64 image data
-    imageData, err := base64.StdEncoding.DecodeString(profileData.ProfilePicture[len("data:image/jpeg;base64,"):])
-    if err != nil {
-        httpresp.RespondWithError(w, http.StatusBadRequest, "invalid base64 data")
-        return
-    }
-
-    sellerProfile := &model.SellerProfile{
-        ContactNumber:  phonenumber,
-        ProfilePicture: imageData,
-    }
-
-    updateErr := sellerProfile.UpdatePic()
-    if updateErr != nil {
-        switch updateErr {
-        case sql.ErrNoRows:
-            httpresp.RespondWithError(w, http.StatusNotFound, "user not found")
-            return
-        default:
-            httpresp.RespondWithError(w, http.StatusInternalServerError, updateErr.Error())
-        }
-    } else {
-        httpresp.RespondWithJson(w, http.StatusOK, sellerProfile)
-    }
-}
-
-func UpdateSellerDetails(w http.ResponseWriter, r *http.Request){
-	pnumber:=mux.Vars(r)["phonenumber"]
-    oldpnumber, numErr := pnumberint.GetPnumber(pnumber)
+	pnumber := mux.Vars(r)["phonenumber"]
+	phonenumber, numErr := pnumberint.GetPnumber(pnumber)
 	if numErr != nil {
-        httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
-        return
-    }
-	var seller model.Seller
-	decoder:=json.NewDecoder(r.Body)
-	if err:=decoder.Decode(&seller); err != nil{
+		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+		return
+	}
+
+	var profileData struct {
+		ProfilePicture string `json:"profilepicture"`
+	}
+
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&profileData); err != nil {
 		httpresp.RespondWithError(w, http.StatusBadRequest, "invalid json body")
 		return
 	}
 	defer r.Body.Close()
-	updateErr:=seller.UpdateDetails(oldpnumber)
-	if updateErr!=nil{
-		switch updateErr{
+
+	// Decode base64 image data
+	imageData, err := base64.StdEncoding.DecodeString(profileData.ProfilePicture[len("data:image/jpeg;base64,"):])
+	if err != nil {
+		httpresp.RespondWithError(w, http.StatusBadRequest, "invalid base64 data")
+		return
+	}
+
+	sellerProfile := &model.SellerProfile{
+		ContactNumber:  phonenumber,
+		ProfilePicture: imageData,
+	}
+
+	updateErr := sellerProfile.UpdatePic()
+	if updateErr != nil {
+		switch updateErr {
+		case sql.ErrNoRows:
+			httpresp.RespondWithError(w, http.StatusNotFound, "user not found")
+			return
+		default:
+			httpresp.RespondWithError(w, http.StatusInternalServerError, updateErr.Error())
+		}
+	} else {
+		httpresp.RespondWithJson(w, http.StatusOK, sellerProfile)
+	}
+}
+
+func UpdateSellerDetails(w http.ResponseWriter, r *http.Request) {
+	pnumber := mux.Vars(r)["phonenumber"]
+	oldpnumber, numErr := pnumberint.GetPnumber(pnumber)
+	if numErr != nil {
+		httpresp.RespondWithError(w, http.StatusBadRequest, numErr.Error())
+		return
+	}
+	var seller model.Seller
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&seller); err != nil {
+		httpresp.RespondWithError(w, http.StatusBadRequest, "invalid json body")
+		return
+	}
+	defer r.Body.Close()
+	updateErr := seller.UpdateDetails(oldpnumber)
+	if updateErr != nil {
+		switch updateErr {
 		case sql.ErrNoRows:
 			httpresp.RespondWithError(w, http.StatusNotFound, "user not found")
 		default:
 			httpresp.RespondWithError(w, http.StatusInternalServerError, updateErr.Error())
 		}
-	}else{
+	} else {
 		httpresp.RespondWithJson(w, http.StatusOK, seller)
 	}
 }
