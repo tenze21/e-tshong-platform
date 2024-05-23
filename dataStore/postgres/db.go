@@ -4,14 +4,15 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+
 	_ "github.com/lib/pq"
 )
 
 const (
-	postgres_host     = "db"
+	postgres_host     = "dpg-cp7n2hnsc6pc73adb860-a.singapore-postgres.render.com"
 	postgres_port     = 5432
-	postgres_user     = "postgres"
-	postgres_password = "postgres"
+	postgres_user     = "root"
+	postgres_password = "cKLCLiuhWAqTT3xYXvR7Npc3pcQkRUIU"
 	postgres_dbname   = "etshong"
 )
 
