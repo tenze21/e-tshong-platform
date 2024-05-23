@@ -66,16 +66,29 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding-inline: 3rem;
+    @media screen and (max-width: 830px) {
+      padding-inline: 1rem;
+    }
     .logo {
       img {
         width: 9rem;
         height: 7rem;
+        @media screen and (max-width: 550px) {
+          width: 7rem;
+        }
       }
     }
     .greeting_text {
       h1 {
         font-size: 2.5rem;
         font-weight: var(--font-weight-medium);
+        white-space: nowrap;
+        @media screen and (max-width: 830px) {
+          font-size: 2rem;
+        }
+        @media screen and (max-width: 550px) {
+          font-size: 1.3rem;
+        }
       }
     }
     .search_bar {
@@ -86,6 +99,14 @@ nav {
         left: 1rem;
         transform: translateY(-50%);
         font-size: 1.5rem;
+        @media screen and (max-width: 830px) {
+          position: static;
+          font-size: 2.5rem;
+          transform: translateY(-10%);
+        }
+        @media screen and (max-width: 550px) {
+          font-size: 2rem;
+        }
       }
       input {
         width: 400px;
@@ -95,6 +116,9 @@ nav {
         border: 2px solid #000;
         padding-right: 2rem;
         transition: all 200ms ease-in-out;
+        @media screen and (max-width: 830px) {
+          display: none;
+        }
         &:focus,
         &:focus-visible {
           border: 1px solid var(--orange);
@@ -112,10 +136,18 @@ nav {
     padding-left: 3.5rem;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
+    @media screen and (max-width: 550px) {
+      padding-left: 1rem;
+      padding-right: 0.5rem;
+    }
     ul {
       list-style: none;
       display: flex;
+      flex-wrap: wrap;
       gap: clamp(1rem, 7vw, 5rem);
+      @media screen and (max-width: 550px) {
+        gap: 1rem;
+      }
       li {
         a {
           text-decoration: none;
@@ -137,11 +169,23 @@ nav {
 main {
   padding-inline: 3rem;
   margin-top: 2rem;
+  @media screen and (max-width: 790px) {
+    padding-inline: 1rem;
+  }
   .d_block {
     display: block;
     margin-inline: auto;
     width: 700px;
     margin-bottom: 2rem;
+    @media screen and (max-width: 720px) {
+      width: 500px;
+    }
+    @media screen and (max-width: 500px) {
+      width: 400px;
+    }
+    @media screen and (max-width: 400px) {
+      width: 350px;
+    }
   }
 }
 .profile_wrapper {
@@ -154,6 +198,17 @@ main {
   gap: 7rem;
   padding: 3rem 0;
   position: relative;
+  @media screen and (max-width: 720px) {
+    flex-direction: column;
+    gap: 1rem;
+    width: 500px;
+  }
+  @media screen and (max-width: 500px) {
+    width: 400px;
+  }
+  @media screen and (max-width: 400px) {
+    width: 350px;
+  }
   .profile_img_wrapper{
     display: flex;
     flex-direction: column;
@@ -257,9 +312,6 @@ main {
       label {
         font-size: 1.3rem;
       }
-      small{
-        color: red;
-      }
     }
     fieldset {
       border: none;
@@ -310,6 +362,9 @@ main {
     h1 {
       font-size: 2rem;
       margin-top: 1.5rem;
+      @media screen and (max-width: 550px) {
+        font-size: 1.5rem;
+      }
     }
     a {
       text-decoration: none;
@@ -318,6 +373,10 @@ main {
       padding: 0.5em 1em;
       transition: var(--hover-transition);
       font-size: 1.3em;
+      @media screen and (max-width: 550px) {
+        padding: 0.3em 0.5em;
+        font-size: 1rem;
+      }
       &:hover {
         background-color: var(--yellow-light);
         color: #fff;
@@ -332,6 +391,10 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+  @media screen and (max-width: 550px) {
+    grid-template-columns: 320px;
+    justify-content: center;
+  }
   .no_post {
     display: flex;
     justify-content: center;
@@ -356,8 +419,6 @@ main {
     .product_img {
       img {
         border-radius: 10px;
-        width: 320px;
-        height: 220px;
       }
     }
     .card_body {

@@ -65,16 +65,32 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding-inline: 3rem;
+    @media screen and (max-width: 830px) {
+      padding-inline: 1rem;
+    }
+    @media screen and (max-width: 550px) {
+      padding-inline: 0;
+    }
     .logo {
       img {
         width: 9rem;
         height: 7rem;
+        @media screen and (max-width: 550px) {
+          width: 7rem;
+        }
       }
     }
     .greeting_text {
       h1 {
         font-size: 2.5rem;
         font-weight: var(--font-weight-medium);
+        white-space: nowrap;
+        @media screen and (max-width: 830px) {
+          font-size: 2rem;
+        }
+        @media screen and (max-width: 550px) {
+          font-size: 1.3rem;
+        }
       }
     }
     .search_bar {
@@ -85,6 +101,14 @@ nav {
         left: 1rem;
         transform: translateY(-50%);
         font-size: 1.5rem;
+        @media screen and (max-width: 830px) {
+          position: static;
+          font-size: 2.5rem;
+          transform: translateY(-10%);
+        }
+        @media screen and (max-width: 550px) {
+          font-size: 2rem;
+        }
       }
       input {
         width: 400px;
@@ -94,6 +118,9 @@ nav {
         border: 2px solid #000;
         padding-right: 2rem;
         transition: all 200ms ease-in-out;
+        @media screen and (max-width: 830px) {
+          display: none;
+        }
         &:focus,
         &:focus-visible {
           border: 1px solid var(--orange);
@@ -111,10 +138,18 @@ nav {
     padding-left: 3.5rem;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
+    @media screen and (max-width: 550px) {
+      padding-left: 1rem;
+      padding-right: 0.5rem;
+    }
     ul {
       list-style: none;
       display: flex;
+      flex-wrap: wrap;
       gap: clamp(1rem, 7vw, 5rem);
+      @media screen and (max-width: 550px) {
+        gap: 1rem;
+      }
       li {
         a {
           text-decoration: none;
@@ -141,19 +176,36 @@ nav {
   background: #efeeee;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: 550px) {
+    grid-template-columns: 1fr;
+    height: 50vh;
+  }
   .hero_text {
     padding-left: 5rem;
+    @media screen and (max-width: 830px) {
+      padding-left: 2rem;
+    }
     h1 {
       margin-bottom: 1rem;
       color: var(--orange);
+      @media screen and (max-width: 830px) {
+        font-size: 1.5rem;
+      }
     }
     h2 {
       margin-bottom: 2rem;
+      @media screen and (max-width: 830px) {
+        font-weight: var(--font-weight-semi-bold);
+        margin-bottom: 0;
+      }
     }
   }
   img {
     width: 50vw;
     height: 50vh;
+    @media screen and (max-width: 550px) {
+      display: none;
+    }
   }
 }
 main {
@@ -163,6 +215,10 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+  @media screen and (max-width: 550px) {
+    grid-template-columns: 320px;
+    justify-content: center;
+  }
   .card_container {
     border: 2px solid #000;
     border-radius: 10px;
@@ -170,8 +226,6 @@ main {
     .product_img {
       img {
         border-radius: 10px;
-        width: 320px;
-        height: 220px;
       }
     }
     .card_body {

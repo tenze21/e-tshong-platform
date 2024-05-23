@@ -66,10 +66,26 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    @media screen and (max-width: 7700px) {
+      flex-direction: column;
+    }
+    @media screen and (max-width: 550px) {
+      padding-inline: 1rem;
+    }
     .logo{
       position: absolute;
       top: 2rem;
       left: 2rem;
+      @media screen and (max-width: 770px) {
+        position: static;
+        align-self: flex-start;
+      }
+      @media screen and (max-width: 550px) {
+        align-self: center;
+      }
+      @media screen and (max-width: 490px) {
+        width: 200px;
+      }
     }
 }
 main{
@@ -80,6 +96,12 @@ main{
     margin: 10vh 0;
     backdrop-filter: blur(5px);
     background: linear-gradient(135deg, rgb(255 255 255 /0.3), rgb(255 255 255 /0));
+    @media screen and (max-width: 770px) {
+      margin: 0;
+    }
+    @media screen and (max-width: 440px) {
+      padding: 0.7rem 1.5rem;
+    }
     &:focus-within{
       border: 2px solid #fff;
     }
@@ -115,6 +137,12 @@ main{
                 background: transparent;
                 border: 2px solid rgba(255,255,255,0.5);
                 padding-left: 0.7em;
+                @media screen and (max-width: 440px) {
+                  width: 330px;
+                }
+                @media screen and (max-width: 400px) {
+                  width: 300px;
+                }
                 &:focus{
                   border: 3px solid rgba(255,255,255,1);
                   outline: none;
@@ -139,6 +167,10 @@ main{
           border: none;
           display: flex;
           gap: 3.5rem;
+          @media screen and (max-width: 440px) {
+            gap: 2rem;
+            align-self: flex-start;
+          }
           legend{
             font-size: 1.3rem;
             color: #fff;
@@ -168,6 +200,9 @@ main{
           font-weight: var(--font-weight-semi-bold);
           color: #fff;
           letter-spacing: 0.3ch;
+          @media screen and (max-width: 440px) {
+            width: 300px;
+          }
           &:hover, &:focus-visible{
             background-color: var(--yellow-light);
             cursor: pointer;

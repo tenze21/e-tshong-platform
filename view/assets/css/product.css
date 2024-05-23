@@ -64,6 +64,9 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding-inline: 3rem;
+    @media screen and (max-width: 830px) {
+      padding-inline: 1rem;
+    }
     .logo {
       img {
         width: 9rem;
@@ -78,6 +81,11 @@ nav {
         left: 1rem;
         transform: translateY(-50%);
         font-size: 1.5rem;
+        @media screen and (max-width: 510px) {
+          position: static;
+          font-size: 2.5rem;
+          transform: translateY(-10%);
+        }
       }
       input {
         width: 500px;
@@ -87,6 +95,15 @@ nav {
         border: 2px solid #000;
         padding-right: 2rem;
         transition: all 200ms ease-in-out;
+        @media screen and (max-width: 830px) {
+          width: 400px;
+        }
+        @media screen and (max-width: 550px) {
+          width: 330px;
+        }
+        @media screen and (max-width: 510px) {
+          display: none;
+        }
         &:focus,
         &:focus-visible {
           border: 1px solid var(--orange);
@@ -105,6 +122,12 @@ nav {
       padding: 0.5em 1.5em;
       border-radius: 10px;
       font-size: 1.3rem;
+      @media screen and (max-width: 830px) {
+        padding: 0.5em 1em;
+      }
+      @media screen and (max-width: 550px) {
+        display: none;
+      }
       &:hover,
       &:focus-visible {
         background-color: var(--yellow-light);
@@ -116,10 +139,18 @@ nav {
     padding-left: 3.5rem;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
+    @media screen and (max-width: 550px) {
+      padding-left: 1rem;
+      padding-right: 0.5rem;
+    }
     ul {
       list-style: none;
       display: flex;
       gap: clamp(1rem, 7vw, 5rem);
+      flex-wrap: wrap;
+      @media screen and (max-width: 550px) {
+        gap: 1rem;
+      }
       li {
         a {
           text-decoration: none;
@@ -144,6 +175,13 @@ main {
   margin-bottom: 2rem;
   padding-inline: 3rem;
   align-items: center;
+  @media screen and (max-width: 1000px) {
+    padding-inline: 3.5rem;
+    grid-template-columns: 1fr;
+  }
+  @media screen and (max-width: 550px) {
+    padding-inline: 1rem;
+  }
   .product_images {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -156,16 +194,27 @@ main {
         font-weight: var(--font-weight-light);
         margin-bottom: 2rem;
         font-weight: var(--font-weight-medium);
+        @media screen and (max-width: 510px) {
+          font-size: 1.5rem;
+          margin-bottom: 1rem;
+        }
       }
       .actual_price {
         font-size: 1.5rem;
         font-weight: var(--font-weight-medium);
         text-decoration: line-through;
+        @media screen and (max-width: 510px) {
+          font-size: 1rem;
+        }
       }
       .new_price {
         font-size: 1.5rem;
         font-weight: var(--font-weight-semi-bold);
         margin-bottom: 2rem;
+        @media screen and (max-width: 510px) {
+          margin-bottom: 1rem;
+          font-size: 1rem;
+        }
       }
     }
     .seller_details {
@@ -173,6 +222,10 @@ main {
       p {
         font-size: 1.5rem;
         margin-bottom: 0.3em;
+        @media screen and (max-width: 510px) {
+          font-size: 1rem;
+          margin-bottom: 0;
+        }
         a{
           text-decoration: none;
           color: #000;
@@ -196,12 +249,18 @@ main {
     }
     .product_description {
       margin-top: 2rem;
+      @media screen and (max-width: 510px) {
+        margin-top: 1rem;
+      }
       h3 {
         font-size: 1.5rem;
         margin-bottom: 0.3rem;
       }
       p {
         font-size: 1.3rem;
+        @media screen and (max-width: 510px) {
+          font-size: 1rem;
+        }
       }
     }
   }

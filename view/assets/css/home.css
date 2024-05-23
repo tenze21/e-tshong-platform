@@ -65,6 +65,9 @@ nav{
     justify-content: space-between;
     align-items: center;
     padding-inline: 3rem;
+    @media screen and (max-width: 830px) {
+      padding-inline: 1rem;
+    }
         .logo{
             img{
                 width: 9rem;
@@ -88,6 +91,15 @@ nav{
                 border: 2px solid #000;
                 padding-right: 2rem;
                 transition: all 200ms ease-in-out;
+                @media screen and (max-width: 830px) {
+                  width: 400px;
+                }
+                @media screen and (max-width: 550px) {
+                  width: 330px;
+                }
+                @media screen and (max-width: 510px) {
+                  display: none;
+                }
                 &:focus, &:focus-visible{
                     border: 1px solid var(--orange);
                     outline: 1px solid var(--orange);
@@ -103,7 +115,14 @@ nav{
             color: #fff;
             background-color: var(--yellow-dark);
             padding: 0.5em 1.5em;
+            border-radius: 10px;
             font-size: 1.3rem;
+            @media screen and (max-width: 830px) {
+              padding: 0.5em 1em;
+            }
+            @media screen and (max-width: 550px) {
+              display: none;
+            }
             &:hover, &:focus-visible{
               background-color: var(--yellow-light);
             }
@@ -114,10 +133,18 @@ nav{
       padding-left: 3.5rem;
       padding-top: 0.5em;
       padding-bottom: 0.5em;
+      @media screen and (max-width: 550px) {
+        padding-left: 1rem;
+        padding-right: 0.5rem;
+      }
       ul{
         list-style: none;
         display: flex;
+        flex-wrap: wrap;
         gap: clamp(1rem, 7vw, 5rem);
+        @media screen and (max-width: 550px) {
+          gap: 1rem;
+        }
         li{
           a{
             text-decoration: none;
@@ -126,9 +153,6 @@ nav{
             &:hover, &:focus-visible{
               color: var(--yellow-light);
               outline: none;
-            }
-            &[aria-current="page"]{
-              color: var(--yellow-light);
             }
           }
         }
@@ -143,8 +167,21 @@ nav{
     background: #efeeee;
     align-items: center;
     justify-content: center;
+    @media screen and (max-width: 830px) {
+      height: 40vh;
+    }
+    @media screen and (max-width: 550px) {
+      grid-template-columns: 1fr;
+      height: 50vh;
+    }
     .hero_text{
       padding-left: 5rem;
+      @media screen and (max-width: 830px) {
+        padding-left: 3rem;
+      }
+      @media screen and (max-width: 550px) {
+        padding-left: 1rem;
+      }
       h1{
         margin-bottom: 1rem;
         color: var(--orange);
@@ -162,6 +199,9 @@ nav{
           font-size: 1.5rem;
           color: #fff;
           transition: all 200ms ease-in-out;
+          @media screen and (max-width: 830px) {
+            padding: 0.3em 0.7em;
+          }
           &:hover{
             background-color: var(--yellow-light);
           }
@@ -181,6 +221,13 @@ nav{
     img{
       width: 50vw;
       height: 50vh;
+      @media screen and (max-width: 830px) {
+        width: 40vw;
+        height: 30vh;
+      }
+      @media screen and (max-width: 550px) {
+        display: none;
+      }
     }
 }
 main{
@@ -190,6 +237,10 @@ main{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+  @media screen and (max-width: 550px) {
+    grid-template-columns: 320px;
+    justify-content: center;
+  }
   .card_container{
     border: 2px solid #000;
     border-radius: 10px;
@@ -197,7 +248,7 @@ main{
     .product_img{
       img{
         border-radius: 10px;
-        width: 320px;
+        width: 300px;
         height: 220px;
       }
     }
