@@ -226,6 +226,8 @@ main {
     .product_img {
       img {
         border-radius: 10px;
+        width: 300px;
+        height: 220px;
       }
     }
     .card_body {
