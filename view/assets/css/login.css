@@ -66,18 +66,27 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  @media screen and (max-width: 830px) {
+    flex-direction: column;
+  }
 }
 .logo {
   position: absolute;
   top: 2rem;
   left: 2rem;
+  @media screen and (max-width: 830px) {
+    position: static;
+    align-self: flex-start;
+  }
+  @media screen and (max-width: 450px) {
+    display: none;
+  }
 }
 
 main {
   border: 2px solid rgba(255, 255, 255, 0.5);
   padding: 1rem 2rem;
   border-radius: 1rem;
-  max-width: 500px;
   margin: 10vh 0;
   backdrop-filter: blur(5px);
   background: linear-gradient(
@@ -85,6 +94,12 @@ main {
     rgb(255 255 255 /0.3),
     rgb(255 255 255 /0)
   );
+  @media screen and (max-width: 450px) {
+    margin: 0;
+  }
+  @media screen and (max-width: 400px) {
+    padding: 1rem;
+  }
   &:focus-within {
     border: 2px solid #fff;
   }
@@ -95,8 +110,18 @@ main {
     a{
       text-decoration: none;
       color: var(--blue-light);
-      &:hover, &:focus-visible{
-        text-decoration: underline;
+      position: relative;
+      &::before{
+        content: "";
+        width: 0;
+        height: 2px;
+        position: absolute;
+        top: 1.3rem;
+        background-color: var(--blue-light);
+        transition: width 300ms ease-in-out;
+      }
+      &:hover::before, &:focus-visible::before{
+        width: 100%;
       }
     }
   }
@@ -111,12 +136,18 @@ main {
         font-weight: var(--font-weight-semi-bold);
         color: var(--orange);
         text-align: center;
+        @media screen and (max-width: 450px) {
+          font-size: 2rem;
+        }
       }
       h2 {
         font-size: clamp(1rem, 1vw + 0.5rem, 2rem);
         font-weight: var(--font-weight-medium);
         color: #fff;
         text-align: center;
+        @media screen and (max-width: 450px) {
+          font-size: 1.5rem;
+        }
       }
     }
     .form_field {
@@ -127,6 +158,9 @@ main {
         background: transparent;
         border: 2px solid rgba(255, 255, 255, 0.5);
         padding-left: 0.7em;
+        @media screen and (max-width: 450px) {
+          width: 300px;
+        }
         &:focus {
           border: 3px solid rgba(255, 255, 255, 1);
           outline: none;
@@ -149,6 +183,9 @@ main {
       letter-spacing: 0.3ch;
       margin-top: 1.5rem;
       margin-bottom: 1rem;
+      @media screen and (max-width: 450px) {
+        width: 300px;
+      }
       &:hover,
       &:focus-visible {
         background-color: var(--yellow-light);

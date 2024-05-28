@@ -14,14 +14,12 @@ DELETE FROM seller WHERE UserId=1;
 DROP TABLE seller;
 
 -- Table for User profile picture.
-CREATE TABLE seller_profile(
     CREATE TABLE seller_profile(
     picture_id SERIAL PRIMARY KEY,
     contact_number int NOT NULL,
     profile_picture BYTEA,
     CONSTRAINT cnumber_fk FOREIGN KEY (contact_number) REFERENCES seller(contactnumber) ON DELETE CASCADE ON UPDATE CASCADE
 )
-);
 
 CREATE TABLE product(
     product_id SERIAL PRIMARY KEY,

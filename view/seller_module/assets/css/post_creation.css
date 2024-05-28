@@ -182,13 +182,16 @@ form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    @media screen and (max-width: 550px) {
-      width: 400px;
-    }
     @media screen and (max-width: 1000px) {
       padding-inline: 1rem;
       grid-template-columns: 1fr;
       gap: 2rem;
+    }
+    @media screen and (max-width: 550px) {
+      width: 400px;
+    }
+    @media screen  and (max-width:420px){
+      width: 350px;
     }
     .product_images_wrapper {
       display: grid;
@@ -203,10 +206,17 @@ form {
         align-items: center;
         width: 400px;
       }
+      @media screen  and (max-width:420px){
+        width: 350px;
+        align-self: center;
+      }
       .product_image {
         position: relative;
         @media screen and (max-width: 550px) {
           width: 400px;
+        }
+        @media screen  and (max-width:420px){
+          width: 350px;
         }
         img {
           width: 400px;
@@ -255,6 +265,12 @@ form {
             -webkit-appearance: none;
             margin: 0;
           }
+          @media screen  and (max-width:450px){
+            width: 350px;
+          }
+          @media screen  and (max-width:380px){
+            width: 310px;
+          }
         }
         input[type=number] {
           -moz-appearance: textfield;
@@ -264,6 +280,12 @@ form {
           height: 45px;
           padding-left: 1rem;
           appearance: none;
+          @media screen  and (max-width:450px){
+            width: 370px;
+          }
+          @media screen  and (max-width:380px){
+            width: 325px;
+          }
         }
         .bx{
           position: absolute;
@@ -277,6 +299,12 @@ form {
           resize: none;
           height: 150px;
           padding: 0.3rem 0 0 1rem;
+          @media screen  and (max-width:450px){
+            width: 350px;
+          }
+          @media screen  and (max-width:380px){
+            width: 300px;
+          }
         }
       }
     }
@@ -292,6 +320,12 @@ form {
     border: none;
     font-size: 1.5em;
     transition: var(--hover-transition);
+    @media screen  and (max-width:450px){
+      padding: 0.3em 5em;
+    }
+    @media screen  and (max-width:380px){
+      padding: 0.3em 4em;
+    }
     &:hover{
       background-color: var(--yellow-light);
       cursor: pointer;

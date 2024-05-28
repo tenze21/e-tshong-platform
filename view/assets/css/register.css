@@ -81,7 +81,7 @@ body{
         align-self: flex-start;
       }
       @media screen and (max-width: 550px) {
-        align-self: center;
+        display: none;
       }
       @media screen and (max-width: 490px) {
         width: 200px;
@@ -101,6 +101,9 @@ main{
     }
     @media screen and (max-width: 440px) {
       padding: 0.7rem 1.5rem;
+    }
+    @media screen and (max-width: 400px) {
+      width: 320px;
     }
     &:focus-within{
       border: 2px solid #fff;
@@ -129,6 +132,9 @@ main{
             label{
               font-size: 1.3rem;
               color: #fff;
+            }
+            @media screen and (max-width:400px) {
+              width: 330px;
             }
             input{
                 width: 350px;
@@ -210,5 +216,8 @@ main{
             outline: none;
           }
         }
+    }
+    .login_link{
+      font-size: 1.3rem;
     }
 }
