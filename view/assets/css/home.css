@@ -120,7 +120,6 @@ nav{
             color: #fff;
             background-color: var(--yellow-dark);
             padding: 0.5em 1.5em;
-            border-radius: 10px;
             font-size: 1.3rem;
             @media screen and (max-width: 830px) {
               padding: 0.5em 1em;
