@@ -21,13 +21,13 @@ By developing e-tshong I got an indepth knowledge of the GO language and in gene
 
 ## Tech stack
 - Frontend:
-      - HTML, CSS, Javascript
+  - HTML, CSS, Javascript
 - Backend:
-      - GO
+  - GO
 - Database:
-      - PostgresSQL
+  - PostgresSQL
 - Deployment:
-      - Render 
+  - Render 
 
 ## Challenges.
 Although GO is known for it's simplicity and being a statically typed language compared to other backend languages like Node js but if you are new to coding GO really takes the hell out of you 😮‍💨 (Sorry GO but I mean no offence). Initially being new to the GO language I was hopeless, thought it wasn't possible to build such an application with GO but as I went on working on e-tshong, I came to realize that GO really was an interesting language to learn. That's all about my cahllenges with GO and my initial views on it. Some challenges I faced while building e-tshong:
@@ -123,3 +123,4 @@ I am greatful to my Backend web development lecturer Mr. Choki Dorji and the aut
 - [Go Official website.](https://go.dev/)
 - [Hitesh Choudary's GO tutorial.](https://www.youtube.com/watch?v=JoJ8Sw5Yb4c&list=PLRAV69dS1uWQGDQoBYMZWKjzuhCaOnBpa&ab_channel=HiteshChoudhary)
 - [live server link.](https://e-tshong-platform.onrender.com)
+- [Render official page.](https://render.com/)
