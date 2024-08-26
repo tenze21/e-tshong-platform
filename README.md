@@ -11,7 +11,7 @@
 - [Links.](#links)
 
 ## Overview.
-The e-tshong project was taken on as part of my Backend web development module for my spring semester (2024). Myself and three other members worked on bringing the project to it's current state. To talk abit about it e-tshong was initailly meant for selling second hand goods but later we realized that not only second hand goods we could also sell first hand or new goods on it.
+The e-tshong project was taken on as part of my Backend web development module for my spring semester (2024). Myself and three other members worked on bringing the project to it's current state. To talk about it e-tshong was initailly meant for selling second hand goods but later we realized that not only second hand goods we could also sell first hand or new goods on it.
 
 ## Learning.
 By developing e-tshong I got an indepth knowledge of the GO language and in general how the web works. I have learned a lot of things like:
@@ -40,7 +40,7 @@ Since this is the first project I have done with GO I want to dedicate this sect
 If you are just getting into programming like me at this stage it's sure that all the above mentioned benifits of GO will not make sense to you as most of these things also don't make much sense to me at the time I am writing this documentation but as you get a hang of GO things slowly start to make sense and you start to love GO.
 
 ## code snippets.
-```
+``` GO
 func Register(w http.ResponseWriter, r *http.Request) {
 
 	var seller model.Seller
@@ -69,7 +69,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-```
+```GO
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
